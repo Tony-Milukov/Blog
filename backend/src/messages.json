@@ -1,0 +1,27 @@
+{
+  "default" : {"message": "ERROR 404 something went wrong", "status":404},
+  "userAdded" : {"message": "User was added successfully", "status":201},
+  "nameAdded" : {"message": "Name was added successfully", "status":201},
+
+  "emailExists" : {
+    "message": "User with that email already exists!",
+    "status": 303
+  },
+  "loginError" : {
+    "message": "Email or password are incorrect!",
+    "status": 404
+  },
+  "userExists" : {
+    "message": "User with that username already exists!",
+    "status": 303
+  },
+  "gitHubInvalid" : {
+    "message": "please enter a valid github link like https://github.com/YOUR_LINK",
+    "status": 303
+  },"instagramInvalid" : {
+  "message": "please enter a valid instagram account link like https://www.instagram.com/YOUR_LINK",
+  "status": 303
+}
+
+
+}
