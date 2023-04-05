@@ -1,3 +1,5 @@
+import {first} from "cheerio/lib/api/traversing";
+
 const bcrypt = require('bcrypt');
 const hashPassword = require('../Auth/hashThePassword');
 const { decodeUser, getToken } = require('../Auth/decodeUser');
@@ -89,24 +91,45 @@ class Users {
     }
   }
 
-  static async changeUserInfo(name:string, email: string, changeType:string) {
+  static async changeUserData(newData: string, email: string, changeType: string) {
     const conn = await pool.getConnection();
+    const sql = changeType === 'job' ? 'UPDATE users SET job = ? WHERE email = ?' : changeType === 'github_link' ? 'UPDATE users SET github_link = ? WHERE email = ?' : changeType === 'instagram_link' ? 'UPDATE users SET instagram_link = ? WHERE email = ?' : changeType === 'firstname' ? 'UPDATE users SET firstname = ? WHERE email = ?' : changeType === 'lastname' ? 'UPDATE users SET lastname = ? WHERE email = ?' : changeType === 'description' ? 'UPDATE users SET description = ? WHERE email = ?' : '';
     try {
-      if (changeType === 'github_link' && !name.includes('https://github.com/')) {
+      if (changeType === 'github_link' && newData && !newData.includes('https://github.com/')) {
         return messages.gitHubInvalid;
-      } if (changeType === 'instagram_link' && !name.includes('https://www.instagram.com/')) {
+      }
+      if (changeType === 'instagram_link' && newData && !newData.includes('https://www.instagram.com/')) {
         return messages.instagramInvalid;
-      } if (await this.getUserByEmail(email)) {
-        console.log(changeType);
-        const sql = `UPDATE users SET ${changeType} = ? WHERE email = ?`;
-        await conn.query(sql, [name, email]);
-
-        return messages.nameAdded;
+      }
+      if (await this.getUserByEmail(email) && sql !== '') {
+        await conn.query(sql, [newData, email]);
+        return { ...messages.userDataChanged, message: `${changeType} ${messages.userDataChanged.message}` };
       }
       throw null;
     } catch (err) {
       console.error(err);
       return messages.default;
+    } finally {
+      conn.release();
+    }
+  }
+
+  static async getUserAccountByUsename(username: string) {
+    const conn = await pool.getConnection();
+    try {
+      const sql = 'SELECT * FROM `users` WHERE `username` = ?';
+      let [data] = await conn.query(sql, [username]);
+      if (data.length === 1) {
+        data = data[0];
+        delete data.id;
+        delete data.password;
+        delete data.firstname;
+        delete data.lastname;
+        return data;
+      }
+      return messages.usernameIvalid;
+    } catch (err) {
+      console.error(err);
     } finally {
       conn.release();
     }

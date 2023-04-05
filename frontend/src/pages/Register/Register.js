@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {emailExp, nameExp, passwordExp} from "./regExps";
 import messages from "./messages"
 import {userStore} from "../../store/user";
+import AuthInput from "../../components/AuthInput";
 
 const Register = () => {
     //if authenticated => homePage
@@ -66,41 +67,22 @@ const Register = () => {
         }
     }
 
-
     if (!token) {
         return <>
             <div className="login-form">
-                <form>
+                <div>
                     <h1>Register</h1>
                     <div className="content">
-                        <div className="input-field">
-                            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email"
-                                   autoComplete="email"/>
-                            <p>{errors.email ? (errors.email.emailErr ? (errors.email.emailErr.message ?? messages.email) : messages.email) : null}</p>
-
-                        </div>
-                        <div className="input-field">
-                            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"
-                                   autoComplete="new-password"/>
-                            <p>{errors.password ? messages.password : null}</p>
-                        </div>
-                        <div className="input-field">
-                            <input onChange={(e) => setRepeatPassword(e.target.value)} type="password"
-                                   placeholder="repeat your password"
-                                   autoComplete="new-password"/>
-                            <p>{errors.passwordsMatch ? messages.passwordsMatch : null}</p>
-                        </div>
-                        <div className="input-field">
-                            <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="name"
-                                   autoComplete="given-name"/>
-                            <p>{errors.username ? (errors.username.usernameErr ? (errors.username.usernameErr.message ?? messages.username) : messages.username) : null}</p>
-                        </div>
+                            <AuthInput action={setEmail} placeholder={"email"} type={"email"} error={errors.email ? (errors.email.emailErr ? (errors.email.emailErr.message ?? messages.email) : messages.email) : null}></AuthInput>
+                            <AuthInput action={setPassword} placeholder={"password"} type={"password"} error={errors.password ? messages.password : null}></AuthInput>
+                            <AuthInput action={setRepeatPassword} placeholder={"repeat your password"} type={"password"} error={errors.passwordsMatch ? messages.passwordsMatch : null}></AuthInput>
+                            <AuthInput action={setUsername} placeholder={"username"} type={"text"} error={errors.username ? (errors.username.usernameErr ? (errors.username.usernameErr.message ?? messages.username) : messages.username) : null}/>
                     </div>
                     <div className="action">
                         <button onClick={() => navigate("/login")}> Login</button>
                         <button onClick={(e) => register(e)}> Register</button>
                     </div>
-                </form>
+                </div>
             </div>
         </>
     }

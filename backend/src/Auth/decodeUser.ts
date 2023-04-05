@@ -11,8 +11,6 @@ const getToken = (req:any) => {
 const decodeUser = async (req:any) => {
   try {
     const token = getToken(req);
-    console.log(jwt.verify(token, process.env.SECRET));
-
     const { email } = jwt.verify(token, process.env.SECRET);
     return email;
   } catch {}

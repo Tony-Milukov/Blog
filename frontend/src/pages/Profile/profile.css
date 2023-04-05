@@ -678,3 +678,7 @@ button {
     display: flex;
     align-items: center;
 }
+.form-horizontal {
+    display: flex;
+    flex-direction: column;
+}

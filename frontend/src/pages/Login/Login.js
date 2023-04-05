@@ -2,6 +2,7 @@ import "./login.css"
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {userStore} from '../../store/user';
+import AuthInput from "../../components/AuthInput";
 
 const LoginPage = () => {
     //if authenticated => homePage
@@ -54,23 +55,18 @@ const LoginPage = () => {
     if(!token) {
         return <>
             <div className="login-form">
-                <form>
+                <div>
                     <h1>Login</h1>
                     <div className="content">
-                        <div className="input-field">
-                            <input onChange={(e) => setEmail(e.target.value)}  type="email" placeholder="Email"  autoComplete="email"/>
-                        </div>
-                        <div className="input-field">
-                            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"
-                                   autoComplete="new-password"/>
-                        </div>
+                            <AuthInput placeholder={"email"} type={"email"}  action={setEmail}/>
+                        <AuthInput placeholder={"password"} type={"password"} action={setPassword}/>
                         {error.message ?? null}
                     </div>
                     <div className="action">
                         <button onClick={() => navigate("/register")}> Register</button>
                         <button onClick={(e) => login(e)}>Sign in</button>
                     </div>
-                </form>
+                </div>
             </div>
         </>
     }

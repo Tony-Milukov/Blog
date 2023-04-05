@@ -4,6 +4,9 @@ import LoginPage from "./pages/Login/Login";
 import RegisterPage from "./pages/Register/Register"
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./pages/Profile/Profile";
+import UserProfile from "./pages/usersProfile/UserProfile";
+import "./App.css"
+import NewTextArticle from "./pages/newArticle/TextArticle/NewTextArticle";
 const Router = () => {
     return (
         <div className={"Routers"}>
@@ -13,10 +16,11 @@ const Router = () => {
                     <Route path={"/login"} element={<LoginPage/>}></Route>
                     <Route path={"/register"}  element={<RegisterPage/>} ></Route>
                     <Route path={"/profile"}  element={<ProfilePage/>} ></Route>
+                    <Route path={"/users/:username"}  element={<UserProfile/>} ></Route>
+                    <Route path={"/newTextArticle"}  element={<NewTextArticle/>} ></Route>
                 </Routes>
-                <Footer/>
             </BrowserRouter>
-
+            <Footer/>
         </div>
     )
 }

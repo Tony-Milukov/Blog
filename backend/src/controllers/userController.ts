@@ -45,13 +45,13 @@ const getUser = async (req:any, res:any) => {
     res.status(messages.default.status).json(messages.default);
   }
 };
-const changeUserInfo = async (req:any, res:any) => {
+const changeUserData = async (req:any, res:any) => {
   try {
     const { changeType, name } = req.body;
     const email = await decodeUser(req);
-    if (changeType === 'lastname' || changeType === 'firstname' || changeType === 'github_link' || changeType === 'instagram_link') {
-      const message = await Users.changeUserInfo(name, email, changeType);
-      res.status(message.status).send(message);
+    if (changeType === 'job' || changeType === 'lastname' || changeType === 'firstname' || changeType === 'github_link' || changeType === 'instagram_link' || changeType === 'description') {
+      const message = await Users.changeUserData(name, email, changeType);
+      res.status(message.status).json(message);
     } else {
       throw null;
     }
@@ -60,12 +60,26 @@ const changeUserInfo = async (req:any, res:any) => {
     res.status(messages.default.status).json(messages.default);
   }
 };
-
+const getUserProfileByUsername = async (req:any, res:any) => {
+  const { username } = req.body;
+  try {
+    const userProfile = await Users.getUserAccountByUsename(username);
+    if (userProfile.username) {
+      res.json(userProfile);
+    } else if (userProfile.status) {
+      res.status(userProfile.status).json(userProfile);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(messages.default.status).json(messages.default);
+  }
+};
 module.exports = {
   loginUser,
   registerUser,
   getUser,
-  changeUserInfo,
+  changeUserData,
+  getUserProfileByUsername,
 };
 
 export {};

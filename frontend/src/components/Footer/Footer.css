@@ -8,6 +8,7 @@
     line-height: 5rem;
     padding: 0 3rem;
     margin: 0 0.3rem 1.2rem 0;
+
     color: #000000;
     text-decoration: none;
     text-align: center;
@@ -19,12 +20,15 @@
     background-color: #c5c5c5;
     border: 0.2rem solid #c5c5c5;
     position: absolute;
-    top: 0;
-    right: 0;
+    top:0;
+    right: -5px;
     color: #FFFFFF;
     background: #0054a5;
     border-color: #0054a5;
     padding: 0 15px;
     border-radius: 0 3px 3px 0;
-    outline: none;
+border-bottom: 0 !important;
+}
+.s-footer__subscribe #mc-form input[type="email"] {
+    border-bottom: 1px solid white !important;
 }

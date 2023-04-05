@@ -1,6 +1,7 @@
 import logo from "../../logo.svg"
 import Nav from "./components/Nav"
 import "./header.css"
+import {Link} from "react-router-dom";
 
 const Header = () => {
 
@@ -8,9 +9,9 @@ const Header = () => {
         <header className="header">
             <div className="header__content row">
                 <div className="header__logo">
-                    <a className="logo" href="index.html">
+                    <Link to={"/"} className="logo">
                         <img src={logo} alt="Homepage"/>
-                    </a>
+                    </Link>
                 </div>
 
                 <ul className="header__social">

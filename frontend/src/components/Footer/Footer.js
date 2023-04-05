@@ -58,9 +58,9 @@ const Footer = () => {
                         <h4>Our Newsletter</h4>
 
                         <div className="subscribe-form">
-                            <form id="mc-form" className="group" noValidate="true">
+                            <form id="mc-form" className="group">
 
-                                <input type="email" name="EMAIL" className="email" id="mc-email"
+                                <input  type="email" name="EMAIL" className="email" id="mc-email"
                                        placeholder="Email Address" required=""/>
 
                                 <input readOnly={true} className="subscribe" value={"subscribe"}/>
