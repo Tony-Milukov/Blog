@@ -1,4 +1,86 @@
-.quill  {
+.mainContainer {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.articleHeader {
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 25px;
+}
+
+.titleHeader {
+    padding-top: 25px !important;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 30px !important;
+    font-family: unset !important;
+    outline: none;
+    text-align: center;
+    width: fit-content;
+}
+
+.newArticle {
+    margin-top: 20px;
     background-color: white;
-    height: 697px;
+    padding-bottom: 25px;
+
+}
+
+.redBorder {
+    padding: 5px;
+    border: 1px solid red;
+    color: red;
+}
+
+.footerArticle {
+    padding: 0px 25px 0px 25px !important;
+
+}
+
+.mainArticle {
+    padding: 0px 25px 0px 25px !important;
+    margin-top: 50px;
+}
+
+.publishBTN {
+    height: 45px;
+    color: #FFFFFF;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: #0054a5;
+    border: none;
+    border-radius: 3px 3px 3px 3px;
+    width: 108px;
+
+
+}
+
+.publishBTN:hover {
+    background: #0054a5;
+    color: #FFFFFF;
+    border-color: #0054a5;
+
+}
+
+.footerContainer {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.errorMSG {
+    color: red;
+    margin-top: 20px;
+}
+
+.selectCathegory select {
+    margin: 0
 }

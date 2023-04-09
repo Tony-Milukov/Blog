@@ -63,7 +63,7 @@ const changeUserData = async (req:any, res:any) => {
 const getUserProfileByUsername = async (req:any, res:any) => {
   const { username } = req.body;
   try {
-    const userProfile = await Users.getUserAccountByUsename(username);
+    const userProfile = await Users.getUserByUsername(username, true);
     if (userProfile.username) {
       res.json(userProfile);
     } else if (userProfile.status) {

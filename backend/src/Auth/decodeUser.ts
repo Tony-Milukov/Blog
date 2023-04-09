@@ -13,7 +13,9 @@ const decodeUser = async (req:any) => {
     const token = getToken(req);
     const { email } = jwt.verify(token, process.env.SECRET);
     return email;
-  } catch {}
+  } catch (e) {
+    console.error(e);
+  }
 };
 module.exports = { decodeUser, getToken };
 

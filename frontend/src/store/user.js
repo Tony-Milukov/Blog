@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
-import {persist,createJSONStorage} from 'zustand/middleware';
+import {persist, createJSONStorage} from 'zustand/middleware';
 
 export const userStore = create(devtools(persist(((set) => ({
     userInfo: {
@@ -24,17 +24,19 @@ export const userStore = create(devtools(persist(((set) => ({
             }
         }));
 
-        setTimeout(() => {set(state => ({
-            ...state,
-            userInfo: {
-                ...state.userInfo,
-                token: false
-            }
-        }))}, 3 * 60 * 60 * 1000)
+        setTimeout(() => {
+            set(state => ({
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    token: false
+                }
+            }))
+        }, 3 * 60 * 60 * 1000)
     },
 })), {
     name: 'userStorage', // unique name
-    storage:createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+    storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
 })))
 
 

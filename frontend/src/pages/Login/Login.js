@@ -18,7 +18,7 @@ const LoginPage = () => {
     const [error, setError] = useState("")
     const [password, setPassword] = useState("")
 
-    const login = (e) => {
+    const login = async (e) => {
         e.preventDefault()
         if (email && password) {
                 let myHeaders = new Headers();
@@ -35,20 +35,19 @@ const LoginPage = () => {
                         body: body,
                     };
 
-                    fetch("http://localhost:5000/user/login", requestOptions)
-                        .then(response => response.text())
-                        .then(result => {
-                            let parsed = JSON.parse(result)
-                            if (parsed.token) {
-                                setError("")
-                                loginState(parsed.token)
-                                navigate("/")
-                            } else {
-                                setError(parsed)
-                            }
-
-                        })
-                        .catch(error => console.log('error', error));
+                   try {
+                       const token =  await fetch("http://localhost:5000/user/login", requestOptions)
+                       const parsedToken = await token.json()
+                       if (parsedToken.token) {
+                           setError("")
+                           loginState(parsedToken.token)
+                           navigate("/")
+                       } else {
+                           setError(parsedToken)
+                       }
+                   } catch (e) {
+                       console.error(e)
+                   }
                 }
         }
     }

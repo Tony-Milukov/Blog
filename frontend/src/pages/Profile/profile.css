@@ -656,6 +656,7 @@ button {
 
 .usernameMain {
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -681,4 +682,8 @@ button {
 .form-horizontal {
     display: flex;
     flex-direction: column;
+}
+.usernameMain a {
+    color: black;
+    margin-bottom: 15px;
 }

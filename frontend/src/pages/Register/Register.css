@@ -101,6 +101,6 @@ button, form,p{
     margin-bottom: 0;
 
 }
-p {
+.content p {
     color: red;
 }

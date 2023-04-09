@@ -1,0 +1,104 @@
+.articleContainer footer, .articleContainer header {
+    padding: 0;
+}
+
+.articleContainer {
+    background-color: #f2f2f2;
+    margin-bottom: 50px !important;
+    padding-bottom: 50px;
+}
+
+.articleMain .ql-syntax {
+    background: #e5e5e5;
+}
+
+.articleContainer p {
+    font-family: "metropolis-medium", sans-serif;
+    padding: 0;
+    font-size: 2.1rem;
+    line-height: 1.857;
+    color: #000000;
+}
+
+.comment__meta {
+    margin-top: 20px;
+}
+
+.articleData {
+    color: #656565;
+}
+
+.article {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.articleTitle {
+    font-size: 55px;
+    line-height: 1.25;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.titleInput {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.articleHeader {
+    font-family: monospace;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.underTitle {
+    display: flex;
+    justify-content: space-around;
+    max-width: 350px;
+    margin: 0 auto;
+    width: 100%;
+    font-size: 20px;
+}
+
+.articleFooter p {
+    author_article: "metropolis-regular", sans-serif;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.875;
+    color: #656565;
+    margin: 0;
+    padding: 0;
+}
+
+.author_article h4 {
+    font-size: 25px;
+    padding: 0;
+}
+
+.s-content__author-about {
+    margin-top: 0;
+}
+
+.articleFooter {
+    padding-bottom: 50px !important;
+}
+
+.s-content__author-social {
+    margin-top: 20px;
+}
+
+.s-content__author-name p {
+    margin-top: 15px;
+    font-weight: normal;
+    letter-spacing: normal;
+    font-size: 12px;
+}
+
+.s-content__author-social {
+    font-weight: 800;
+}
+
+.comment__info a {
+    color: black;
+}

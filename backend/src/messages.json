@@ -1,14 +1,24 @@
 {
   "default" : {"message": "ERROR 404 something went wrong", "status":404},
   "userAdded" : {"message": "User was added successfully", "status":201},
+  "newArticleAdded" : {"message": "The new Article was added successfully", "status":201},
+  "userNotDefned" : {"message": "User was not defined", "status":404},
+
   "userDataChanged" : {"message": "was changed successfully", "status":201},
 
   "emailExists" : {
     "message": "User with that email already exists!",
     "status": 303
   },
+  "commentAdded" :  {"message": "Comment was added successfully", "status":201},
+  "commentErr" :  {"message": "Comment was not defined", "status":404},
+
   "usernameIvalid" : {
     "message": "User with that username doesnt exist",
+    "status": 404
+  },
+  "articleNotFound" : {
+    "message": "That article was not found",
     "status": 404
   },
   "loginError" : {

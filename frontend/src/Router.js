@@ -7,6 +7,7 @@ import ProfilePage from "./pages/Profile/Profile";
 import UserProfile from "./pages/usersProfile/UserProfile";
 import "./App.css"
 import NewTextArticle from "./pages/newArticle/TextArticle/NewTextArticle";
+import Article from "./pages/Article/Article";
 const Router = () => {
     return (
         <div className={"Routers"}>
@@ -18,6 +19,7 @@ const Router = () => {
                     <Route path={"/profile"}  element={<ProfilePage/>} ></Route>
                     <Route path={"/users/:username"}  element={<UserProfile/>} ></Route>
                     <Route path={"/newTextArticle"}  element={<NewTextArticle/>} ></Route>
+                    <Route path={"/articles/:id"} element={<Article/>}></Route>
                 </Routes>
             </BrowserRouter>
             <Footer/>

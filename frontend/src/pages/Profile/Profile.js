@@ -1,40 +1,25 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {userStore} from "../../store/user";
 import {useEffect, useState} from "react";
 import "./profile.css"
 import ChangeUserDataInput from "./components/ChangeUserDataInput";
+import getUser from "./components/getUser";
 
 const Profile = () => {
     const token = userStore(state => state.userInfo.token)
+
     const navigate = useNavigate()
     useEffect(() => {
         !token ? navigate("/login") : null
     }, [])
 
     const [user, setUser] = useState(null);
-    const getUser = () => {
-        if (token) {
-            let myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${token}`)
-            let requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-            };
-            fetch("http://localhost:5000/user/getUser", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    let parsed = JSON.parse(result)
-                    if (parsed.id) {
-                        setUser(parsed)
-                    }
-                    console.log(parsed)
-                })
-                .catch(error => console.log('error', error));
-
-        }
+    const refresh = async () => {
+        const user = await getUser(token)
+        setUser(user)
     }
     useEffect(() => {
-        getUser()
+        refresh()
     }, [])
 
     if (token && user) {
@@ -50,9 +35,8 @@ const Profile = () => {
                                     <img className="img-profile img-circle img-responsive center-block"
                                          src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""/>
                                     <div className={"usernameMain"}>
-                                        <div> #{user ? user.username ?? null : null}
-                                        </div>
-                                        {/*<label className="label label-info">UX Designer</label>*/}
+                                        <Link to={`/users/${user.username}`}> @{user ? user.username ?? null : null}</Link>
+                                        <label className="label label-info">{user.job}</label>
                                     </div>
                                 </div>
                                 <nav className="side-menu">
@@ -71,7 +55,7 @@ const Profile = () => {
                                     <ChangeUserDataInput user={user} changeType={"firstname"} title={"First Name"}/>
                                     <ChangeUserDataInput user={user} changeType={"lastname"} title={"Last Name"}/>
                                     <ChangeUserDataInput isTextArea={true} user={user} changeType={"description"} title={"Description"}/>
-                                    <ChangeUserDataInput user={user} changeType={"job"} title={"Job"}/>
+                                    <ChangeUserDataInput handler={refresh} user={user} changeType={"job"} title={"Job"}/>
 
                                     <fieldset className="fieldset">
                                         <h3 className="fieldset-title">Contact Info</h3>
@@ -84,7 +68,7 @@ const Profile = () => {
                                             </div>
                                         </div>
                                     </fieldset>
-                                    <ChangeUserDataInput user={user} changeType={"github_link"} title={"Github Link"}/>
+                                    <ChangeUserDataInput  user={user} changeType={"github_link"} title={"Github Link"}/>
                                     <ChangeUserDataInput user={user} changeType={"instagram_link"} title={"Instagram Link"}/>
 
                                     <hr/>

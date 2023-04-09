@@ -1,4 +1,4 @@
-import {first} from "cheerio/lib/api/traversing";
+import { first } from 'cheerio/lib/api/traversing';
 
 const bcrypt = require('bcrypt');
 const hashPassword = require('../Auth/hashThePassword');
@@ -9,12 +9,16 @@ const signToken = require('../Auth/signToken');
 const pool = require('../models/db');
 
 class Users {
-  static async getUserByEmail(email: string) {
+  static async getUserByEmail(email: string, getOnlyUsername: boolean = false) {
     const conn = await pool.getConnection();
     try {
       const sql = 'SELECT * FROM `users` WHERE `email` = ?';
       const [data] = await conn.query(sql, [email]);
+
       if (data.length === 1) {
+        if (getOnlyUsername) {
+          return data[0].username;
+        }
         return data;
       }
       return false;
@@ -25,15 +29,22 @@ class Users {
     }
   }
 
-  static async getUserByUsername(username: string) {
+  static async getUserByUsername(username: string, getUserProfile:boolean = false) {
     const conn = await pool.getConnection();
     try {
       const sql = 'SELECT * FROM `users` WHERE `username` = ?';
       const [data] = await conn.query(sql, [username]);
       if (data.length === 1) {
-        return data;
+        if (getUserProfile) {
+          delete data[0].id;
+          delete data[0].password;
+          delete data[0].firstname;
+          delete data[0].lastname;
+          return data[0];
+        }
+        return data[0];
       }
-      return false;
+      return messages.userNotDefned;
     } catch (err) {
       console.error(err);
     } finally {
@@ -109,27 +120,6 @@ class Users {
     } catch (err) {
       console.error(err);
       return messages.default;
-    } finally {
-      conn.release();
-    }
-  }
-
-  static async getUserAccountByUsename(username: string) {
-    const conn = await pool.getConnection();
-    try {
-      const sql = 'SELECT * FROM `users` WHERE `username` = ?';
-      let [data] = await conn.query(sql, [username]);
-      if (data.length === 1) {
-        data = data[0];
-        delete data.id;
-        delete data.password;
-        delete data.firstname;
-        delete data.lastname;
-        return data;
-      }
-      return messages.usernameIvalid;
-    } catch (err) {
-      console.error(err);
     } finally {
       conn.release();
     }

@@ -28,7 +28,7 @@ const Nav = () => {
                     <li><a href="single-standard.html">Standard Post</a></li>
                 </ul>
             </li>
-            {token ? <li><Link to={"profile"}>Profile</Link></li> : null}
+            {token ? <><li><Link to={"profile"}>Profile</Link></li> <li><Link to={"newTextArticle"}>New Article</Link></li></> : null}
             <li><a href="about.html" title="">About</a></li>
             <li><a href="contact.html" title="">Contact</a></li>
             <li>{!token ? <Link className={"authBtn"} to={"/login"} title=""><b>Login</b></Link> :
