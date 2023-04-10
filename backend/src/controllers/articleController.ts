@@ -10,11 +10,12 @@ const newArticle = async (req : any, res :any) => {
   try {
     if (articleValue && articleType && title && cathegory) {
       const email = await decodeUser(req);
-      const username = await Users.getUserByEmail(email, true);
+      const username = await Users.getUsernameByEmail(email);
+
       const message = await Articles.newArticle(articleType, username, articleValue, title, cathegory);
       res.status(message.status ?? 404).send(message);
     } else {
-      throw null;
+      throw 'no articleType or articleValue or title or cathegory  inputted';
     }
   } catch (e) {
     res.status(messages.default.status).send(messages.default);
@@ -58,6 +59,7 @@ const getArticleById = async (req :any, res:any) => {
 };
 const getCommentByArticleId = async (req:any, res:any) => {
   const { articleId } = req.body;
+
   try {
     if (articleId) {
       const comment = await Articles.getCommentByArticleId(articleId);
@@ -92,8 +94,27 @@ const getArticleByUsername = async (req:any, res:any) => {
     console.error(e);
   }
 };
+const getArticleByCathegory = async (req:any, res:any) => {
+  const { cathegory } = req.body;
+  try {
+    if (cathegory) {
+      const articles = await Articles.getArticleByCathegory(cathegory);
+      if (articles.status) {
+        res.status(articles.status).send(articles);
+      } else {
+        res.send(articles);
+      }
+    } else {
+      throw 'no cathegory inputted';
+    }
+  } catch (e) {
+    res.send(messages.default);
+    console.error(e);
+  }
+};
 
 module.exports = {
   newArticle, getArticleById, addComment, getCommentByArticleId, getArticleByUsername,
+  getArticleByCathegory,
 };
 export {};

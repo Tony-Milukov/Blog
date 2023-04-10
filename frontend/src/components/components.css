@@ -6,10 +6,12 @@
     right: 0;
     background: rgba(0, 0, 0, 0.7);
     z-index: 100;
-
 }
 
+#popup1 {
+    padding: 10px;
 
+}
 .popup {
     margin: 70px auto;
     padding: 20px;
@@ -30,20 +32,24 @@
 .popup .content {
     max-height: 30%;
 }
+
 .popup {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 200px;
+    min-height: 200px;
+    text-align: center;
 }
+
 .content {
-    margin-top:20px;
+    margin-top: 20px;
 
     font-size: 20px;
 }
+
 .popup_link {
-    height: 55px;
+    height: 40px;
     background-color: #0054a5;
     color: white;
     width: 80px;
@@ -54,6 +60,7 @@
     margin-top: 50px;
 
 }
+
 .popup_link:hover {
     color: white;
 }

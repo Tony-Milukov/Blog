@@ -1,3 +1,41 @@
 .authBtn {
     cursor: pointer;
 }
+.search-is-visible {
+    opacity: 1 ;
+    visibility: visible;
+}
+.header__overlay-close{
+    cursor: pointer;
+}
+.search-field {
+    color:white !important;
+    text-align: center;
+}
+.matchedElem {
+    color: white;
+    margin-top: 15px;
+}
+.matchedElem  a{
+    font-size: 20px;
+    color: white;
+}
+.matchedElem  a:hover{
+    color: #00a7c6;
+}
+.nothingFoundSearch {
+    color: white;
+    font-size: 20px;
+}
+
+.searchMatches {
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 500px;
+}
+.header__search-trigger{
+    cursor: pointer;
+}
+a {
+    cursor: pointer;
+}

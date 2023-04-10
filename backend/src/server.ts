@@ -3,6 +3,7 @@ const cors = require('cors');
 const userRouter = require('./routes/userRoutes');
 const messages = require('./messages.json');
 const articlesRouter = require('./routes/articleRoutes');
+const generalRouter = require('./routes/generalRoutes');
 
 const app = exspress();
 
@@ -14,6 +15,7 @@ app.all('', (req:any, res:any) => {
 
 app.use('/user', userRouter);
 app.use('/articles', articlesRouter);
+app.use(generalRouter);
 
 const startServer = (PORT:number) => {
   try {

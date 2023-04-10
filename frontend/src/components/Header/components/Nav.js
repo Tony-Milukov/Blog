@@ -1,36 +1,46 @@
 import {Link, useNavigate} from "react-router-dom";
 import {userStore} from '../../../store/user';
+import getUser from "../../../pages/Profile/components/getUser";
+import {useEffect, useState} from "react";
 
 
 const Nav = () => {
     const token = userStore(state => state.userInfo.token)
     const logoutState = userStore((state) => state.logout)
+    const [username, setUsername] = useState()
+    const categories = ["programming", "lifestyle", "family", "management", "Travel", "Work"];
+    useEffect(() => {
+        const fetch = async () => {
+            const user = await getUser(token)
+            if (!user) {
+                logoutState()
+            } else {
+                setUsername(user.username)
+            }
+        }
+        fetch()
+    }, [])
     return (
         <ul className="header__nav">
-            <li className="current"><a href="index.html" title="">Home</a></li>
+            <li className="current"><Link to={"/"}>Home</Link></li>
             <li className="has-children">
-                <a href="#0" title="">Categories</a>
+                <a title="">Categories</a>
                 <ul className="sub-menu">
-                    <li><a href="category.html">Lifestyle</a></li>
-                    <li><a href="category.html">Health</a></li>
-                    <li><a href="category.html">Family</a></li>
-                    <li><a href="category.html">Management</a></li>
-                    <li><a href="category.html">Travel</a></li>
-                    <li><a href="category.html">Work</a></li>
+                    {categories.map(category => <li><Link to={`articles/category/${category}`}>{category}</Link></li>)}
                 </ul>
             </li>
-            <li className="has-children">
-                <a href="#0" title="">Blog</a>
-                <ul className="sub-menu">
-                    <li><a href="single-video.html">Video Post</a></li>
-                    <li><a href="single-audio.html">Audio Post</a></li>
-                    <li><a href="single-gallery.html">Gallery Post</a></li>
-                    <li><a href="single-standard.html">Standard Post</a></li>
-                </ul>
-            </li>
-            {token ? <><li><Link to={"profile"}>Profile</Link></li> <li><Link to={"newTextArticle"}>New Article</Link></li></> : null}
-            <li><a href="about.html" title="">About</a></li>
-            <li><a href="contact.html" title="">Contact</a></li>
+
+            {token ? <>
+                    <li className="has-children">
+                        <a href="#0" title="">Your Blog</a>
+                        <ul className="sub-menu">
+                            <li><Link to={"/newTextArticle"}>New Article</Link></li>
+                            <li><Link to={`/users/${username}`}>Account</Link></li>
+                        </ul>
+                    </li>
+                    <li><Link to={"profile"}>Settings</Link></li>
+                </>
+                : null}
             <li>{!token ? <Link className={"authBtn"} to={"/login"} title=""><b>Login</b></Link> :
                 <Link to={"/login"} className={"authBtn"} onClick={() => {
                     logoutState();

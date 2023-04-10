@@ -13,7 +13,7 @@ const loginUser = async (req:any, res:any) => {
         res.status(userToken.status).json(userToken);
       }
     } else {
-      throw null;
+      throw 'email or password err';
     }
   } catch {
     res.status(messages.default.status).json(messages.default);
@@ -22,13 +22,12 @@ const loginUser = async (req:any, res:any) => {
 
 const registerUser = async (req:any, res:any) => {
   const { email, name, password } = req.body;
-
   try {
     if (email !== undefined && password !== undefined && name !== undefined) {
       const message = await Users.registerUser(email, password, name);
       res.status(message.status ?? 303).json(message);
     } else {
-      throw null;
+      throw 'email or name or password err';
     }
   } catch {
     res.status(messages.default.status).json(messages.default);
@@ -53,7 +52,7 @@ const changeUserData = async (req:any, res:any) => {
       const message = await Users.changeUserData(name, email, changeType);
       res.status(message.status).json(message);
     } else {
-      throw null;
+      throw 'changeType or name err';
     }
   } catch (e) {
     console.error(e);
@@ -63,7 +62,7 @@ const changeUserData = async (req:any, res:any) => {
 const getUserProfileByUsername = async (req:any, res:any) => {
   const { username } = req.body;
   try {
-    const userProfile = await Users.getUserByUsername(username, true);
+    const userProfile = await Users.getUserProfile(username);
     if (userProfile.username) {
       res.json(userProfile);
     } else if (userProfile.status) {
@@ -74,6 +73,7 @@ const getUserProfileByUsername = async (req:any, res:any) => {
     res.status(messages.default.status).json(messages.default);
   }
 };
+
 module.exports = {
   loginUser,
   registerUser,

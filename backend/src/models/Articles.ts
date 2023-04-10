@@ -2,6 +2,8 @@ const pool = require('./db');
 const messages = require('../messages.json');
 
 class Articles {
+  static cathegories = ['programming', 'lifestyle', 'family', 'management', 'Travel', 'Work'];
+
   static async newArticle(artycleType:string, owner:string, articleValue:string, title:string, cathegory:string) {
     let sql = '';
     try {
@@ -39,7 +41,7 @@ class Articles {
       if (Object.keys(article).length >= 1) {
         return article;
       }
-      return messages.articleNotFound;
+      return messages.userArticlesNotFound;
     } catch (e) {
       console.log(e);
       return messages.default;
@@ -67,6 +69,39 @@ class Articles {
       } return messages.commentErr;
     } catch (e) {
       console.log(e);
+      return messages.default;
+    }
+  }
+
+  static async searchArticle(title:string) {
+    const sql = 'SELECT * FROM `text_article` WHERE `title` LIKE ?';
+    try {
+      const [data] = await pool.query(sql, [`%${title}%`]);
+      return data.map((i:any) => ({
+        title: i.title,
+        articleId: i.id,
+        type: 'article',
+      }));
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
+
+  static async getArticleByCathegory(cathegory:string) {
+    const sql = 'SELECT * FROM `text_article` WHERE `category` = ?';
+    try {
+      if (this.cathegories.includes(cathegory)) {
+        const [data] = await pool.query(sql, [cathegory]);
+        if (data.length >= 1) {
+          return data;
+        }
+        return messages.nothingFoundCathegory;
+      } else {
+          return messages.cathegoryNotExist;
+      }
+    } catch (e) {
+      console.error(e);
       return messages.default;
     }
   }

@@ -1,5 +1,4 @@
 const getComments = async (id) => {
-    console.log(id)
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 

@@ -1,5 +1,3 @@
-import {userStore} from "../../../store/user";
-
 const addComment = async (articleId,commentValue,owner,token) => {
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -21,6 +19,7 @@ const addComment = async (articleId,commentValue,owner,token) => {
     try {
         const res =  await fetch("http://localhost:5000/articles/addComment", requestOptions)
         console.log( await res.json())
+        return res ?? false
     } catch (e) {
         console.error(e)
     }

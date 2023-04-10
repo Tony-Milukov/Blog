@@ -25,10 +25,8 @@
 .newArticle {
     margin-top: 20px;
     background-color: white;
-    padding-bottom: 25px;
-
+    padding-bottom: 50px;
 }
-
 .redBorder {
     padding: 5px;
     border: 1px solid red;
@@ -83,4 +81,9 @@
 
 .selectCathegory select {
     margin: 0
+}
+.valueLength {
+    text-align: end;
+    display: block;
+    margin-top: 15px
 }

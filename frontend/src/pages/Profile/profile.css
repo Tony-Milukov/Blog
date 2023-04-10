@@ -687,3 +687,6 @@ button {
     color: black;
     margin-bottom: 15px;
 }
+.container {
+    min-height: 100vh;
+}

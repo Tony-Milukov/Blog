@@ -11,7 +11,7 @@ const getUser = async (token) => {
                 try {
                     const user = await fetch("http://localhost:5000/user/getUser", requestOptions)
                     const parsedUser = await user.json()
-                    return parsedUser
+                    return parsedUser ?? false
                 } catch (e) {
                     console.error(e)
                 }

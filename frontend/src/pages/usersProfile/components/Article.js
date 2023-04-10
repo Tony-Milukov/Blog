@@ -10,9 +10,7 @@ const Article = ({article}) => {
 
     const first200Symbols = `${article.text.replace(/(<([^>]+)>)/gi, '').slice(0, 250)}...`
     const date_created = new Date(article.date_created)
-
-    const date = `${monthNames[date_created.getDate()]} ${date_created.getMonth()} @ ${date_created.getUTCHours()}:${date_created.getUTCMinutes()}`
-    console.log(article)
+    const date = `${monthNames[date_created.getMonth()]} ${date_created.getDate()} @ ${date_created.getUTCHours()}:${date_created.getUTCMinutes()}`
     return <div className={"UserArticle"}>
         <Link to={`/articles/${article.id}`}>
             <div className="userArticleTitle">{article.title}</div>

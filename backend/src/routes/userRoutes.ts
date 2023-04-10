@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {
-  loginUser, registerUser, getUser, changeUserData, getUserProfileByUsername,
-} = require('../controllers/userController');
+  loginUser, registerUser, getUser, changeUserData, getUserProfileByUsername} = require('../controllers/userController');
 const passport = require('../Auth/passport');
 
 const router = express.Router();

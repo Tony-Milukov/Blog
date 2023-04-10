@@ -1,41 +1,70 @@
 {
-  "default" : {"message": "ERROR 404 something went wrong", "status":404},
-  "userAdded" : {"message": "User was added successfully", "status":201},
-  "newArticleAdded" : {"message": "The new Article was added successfully", "status":201},
-  "userNotDefned" : {"message": "User was not defined", "status":404},
-
-  "userDataChanged" : {"message": "was changed successfully", "status":201},
-
-  "emailExists" : {
+  "default": {
+    "message": "ERROR 404 something went wrong",
+    "status": 404
+  },
+  "userAdded": {
+    "message": "User was added successfully",
+    "status": 201
+  },
+  "newArticleAdded": {
+    "message": "The new Article was added successfully",
+    "status": 201
+  },
+  "userNotDefned": {
+    "message": "User was not defined",
+    "status": 404
+  },
+  "userDataChanged": {
+    "message": "was changed successfully",
+    "status": 201
+  },
+  "emailExists": {
     "message": "User with that email already exists!",
     "status": 303
   },
-  "commentAdded" :  {"message": "Comment was added successfully", "status":201},
-  "commentErr" :  {"message": "Comment was not defined", "status":404},
-
-  "usernameIvalid" : {
+  "commentAdded": {
+    "message": "Comment was added successfully",
+    "status": 201
+  },
+  "commentErr": {
+    "message": "Comment was not defined",
+    "status": 404
+  },
+  "usernameIvalid": {
     "message": "User with that username doesnt exist",
     "status": 404
   },
-  "articleNotFound" : {
+  "articleNotFound": {
     "message": "That article was not found",
     "status": 404
   },
-  "loginError" : {
+  "userArticlesNotFound": {
+    "message": "Articles for this user were not defined",
+    "status": 404
+  },
+  "loginError": {
     "message": "Email or password are incorrect!",
     "status": 404
   },
-  "userExists" : {
+  "userExists": {
     "message": "User with that username already exists!",
     "status": 303
   },
-  "gitHubInvalid" : {
+  "gitHubInvalid": {
     "message": "please enter a valid github link like https://github.com/YOUR_LINK",
     "status": 303
-  },"instagramInvalid" : {
-  "message": "please enter a valid instagram account link like https://www.instagram.com/YOUR_LINK",
-  "status": 303
-}
-
-
+  },
+  "instagramInvalid": {
+    "message": "please enter a valid instagram account link like https://www.instagram.com/YOUR_LINK",
+    "status": 303
+  },
+  "nothingFoundCathegory": {
+    "message": "Nothing was found in this  category, please try again later",
+    "status": 404
+  },
+  "cathegoryNotExist": {
+    "message": "Sorry, but this category doesnt exist, that's all we know :(",
+    "status": 404
+  }
 }

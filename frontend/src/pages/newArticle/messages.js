@@ -1,5 +1,5 @@
 const messages = {
-    articleValue: "You have to enter some text!",
+    articleValue: "The minimal text length is 200.!",
     cathegory: "You have to choose one of the categories ",
     title: "Invalid title"
 }

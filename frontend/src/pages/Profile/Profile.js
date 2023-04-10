@@ -1,17 +1,14 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {userStore} from "../../store/user";
 import {useEffect, useState} from "react";
 import "./profile.css"
 import ChangeUserDataInput from "./components/ChangeUserDataInput";
 import getUser from "./components/getUser";
+import useAuth from "../../hooks/useAuth";
 
 const Profile = () => {
     const token = userStore(state => state.userInfo.token)
-
-    const navigate = useNavigate()
-    useEffect(() => {
-        !token ? navigate("/login") : null
-    }, [])
+    useAuth(token)
 
     const [user, setUser] = useState(null);
     const refresh = async () => {
@@ -24,7 +21,6 @@ const Profile = () => {
 
     if (token && user) {
         return <>
-
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container">
                 <div className="view-account">
@@ -32,7 +28,7 @@ const Profile = () => {
                         <div className="module-inner">
                             <div className="side-bar">
                                 <div className="user-info">
-                                    <img className="img-profile img-circle img-responsive center-block"
+                                    <img className=" img-profile img-circle img-responsive center-block"
                                          src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""/>
                                     <div className={"usernameMain"}>
                                         <Link to={`/users/${user.username}`}> @{user ? user.username ?? null : null}</Link>
@@ -89,6 +85,10 @@ const Profile = () => {
             <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             <script type="text/javascript"/>
         </>
+    }
+    else {
+      return  <div className="container">
+        </div>
     }
 }
 

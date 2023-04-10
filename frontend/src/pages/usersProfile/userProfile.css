@@ -219,7 +219,7 @@ main {
     max-width: 700px;
     width: 100%;
 }
-.userArticles .userArticleTitle {
+.userArticleTitle {
     display: flex;
     font-family: 'Montserrat';
     margin-bottom: 15px;
@@ -239,4 +239,12 @@ main {
 }
 .UserArticle .articleData {
     margin-top: 10px;
+}
+.row_profile {
+    text-align: center;
+    width: 100%;
+}
+
+.info,.desc {
+    color: black;
 }

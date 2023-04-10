@@ -2,6 +2,7 @@ import logo from "../../logo.svg"
 import Nav from "./components/Nav"
 import "./header.css"
 import {Link} from "react-router-dom";
+import SearchInput from "./components/SearchInput";
 
 const Header = () => {
 
@@ -29,22 +30,7 @@ const Header = () => {
                     </li>
                 </ul>
 
-                <a className="header__search-trigger" href="#0"></a>
 
-                <div className="header__search">
-
-                    <form role="search" method="get" className="header__search-form" action="#">
-                        <label>
-                            <span className="hide-content">Search for:</span>
-                            <input type="search" className="search-field" placeholder="Type Keywords" value="" name="s"
-                                   title="Search for:" autoComplete="off"/>
-                        </label>
-                        <input type="submit" className="search-submit" value="Search"/>
-                    </form>
-
-                    <a href="#0" title="Close Search" className="header__overlay-close">Close</a>
-
-                </div>
 
 
                 <a className="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
@@ -58,7 +44,7 @@ const Header = () => {
                     <a href="#0" title="Close Menu" className="header__overlay-close close-mobile-menu">Close</a>
 
                 </nav>
-
+                <SearchInput/>
             </div>
         </header>
     </>)

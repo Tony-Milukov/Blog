@@ -1,18 +1,26 @@
 const jwt = require('jsonwebtoken');
 
 const getToken = (req:any) => {
-  if (req.headers.authorization !== undefined) {
+  if (req && req.headers && req.headers.authorization) {
     const token = req.headers.authorization.replace('Bearer ', '');
+
     return token;
   }
   return false;
 };
-// eslint-disable-next-line consistent-return
 const decodeUser = async (req:any) => {
   try {
-    const token = getToken(req);
-    const { email } = jwt.verify(token, process.env.SECRET);
-    return email;
+    if (req) {
+      const token = getToken(req);
+      if (token) {
+        return jwt.verify(token, process.env.SECRET, (err:any, email :any) => {
+          if (!err) {
+            return email.email;
+          }
+          return false;
+        });
+      }
+    } return false;
   } catch (e) {
     console.error(e);
   }

@@ -1,34 +1,4 @@
-.subscribe {
-    display: inline-block;
-    font-family: "metropolis-bold", sans-serif;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: .3rem;
-    height: 5.4rem;
-    line-height: 5rem;
-    padding: 0 3rem;
-    margin: 0 0.3rem 1.2rem 0;
-
-    color: #000000;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-    border-radius: 3px;
-    cursor: pointer;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: #c5c5c5;
-    border: 0.2rem solid #c5c5c5;
-    position: absolute;
-    top:0;
-    right: -5px;
-    color: #FFFFFF;
-    background: #0054a5;
-    border-color: #0054a5;
-    padding: 0 15px;
-    border-radius: 0 3px 3px 0;
-border-bottom: 0 !important;
-}
-.s-footer__subscribe #mc-form input[type="email"] {
-    border-bottom: 1px solid white !important;
+.s-footer__copyright {
+    width: fit-content;
+    margin: 0 auto;
 }
