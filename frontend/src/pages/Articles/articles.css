@@ -1,0 +1,35 @@
+.articlesPageContainer {
+    background-color: white;
+    padding: 50px;
+    margin-top: 50px;
+}
+.articlesPageContainer .containerArticles {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+.articlesPageContainer .articlesPageHeader {
+    text-align: center;
+    font-family: monospace;
+    font-size: 30px;
+    margin-top: 0;
+}
+
+
+.paginationContainer {
+    max-width: 300px;
+    margin: 0 auto;
+    width: 100%;
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.paginationContainer a {
+    color: white;
+    font-size: 30px;
+}
+
+.paginationContainer a:hover {
+    color: white;
+}

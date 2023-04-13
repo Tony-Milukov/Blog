@@ -97,9 +97,22 @@ class Articles {
           return data;
         }
         return messages.nothingFoundCathegory;
-      } else {
-          return messages.cathegoryNotExist;
       }
+      return messages.cathegoryNotExist;
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
+
+  static async getAllArticlesByPage(page:number) {
+    const sql = 'SELECT * FROM text_article LIMIT 5 OFFSET ?';
+    try {
+      const [data] = await pool.query(sql, [page === 1 ? page : page * 5 - 4]);
+      if (data.length >= 1) {
+        return data;
+      }
+      return messages.pageEmpty;
     } catch (e) {
       console.error(e);
       return messages.default;

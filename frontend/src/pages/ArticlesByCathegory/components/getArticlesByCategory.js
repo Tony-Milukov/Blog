@@ -1,4 +1,4 @@
-const getArticles  =  async (category) => {
+const getArticlesByCategory  =  async (category) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -22,4 +22,4 @@ const getArticles  =  async (category) => {
    }
 
 }
-export default getArticles
+export default getArticlesByCategory

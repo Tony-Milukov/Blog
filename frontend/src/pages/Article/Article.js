@@ -14,6 +14,7 @@ import {userStore} from "../../store/user";
 import {useLocation} from 'react-router-dom';
 
 const Article = () => {
+
     const token = userStore(state => state.userInfo.token)
     const logout = userStore((state) => state.logout)
     const {id} = useParams()

@@ -15,11 +15,11 @@ const Nav = () => {
             if (!user) {
                 logoutState()
             } else {
-                setUsername(user.username)
+                setUsername(user.username);
             }
         }
         fetch()
-    }, [])
+    }, [token])
     return (
         <ul className="header__nav">
             <li className="current"><Link to={"/"}>Home</Link></li>

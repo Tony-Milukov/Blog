@@ -8,20 +8,28 @@ import UserProfile from "./pages/usersProfile/UserProfile";
 import "./App.css"
 import NewTextArticle from "./pages/newArticle/TextArticle/NewTextArticle";
 import Article from "./pages/Article/Article";
-import Articles from "./pages/ArticlesByCathegory/Articles";
+import ArticlesByCat from "./pages/ArticlesByCathegory/ArticlesByCat";
+import Articles from "./pages/Articles/Articles";
+import Popup from "./components/Popup";
+import Home from "./pages/Home/Home";
 const Router = () => {
     return (
         <div className={"Routers"}>
             <BrowserRouter>
                 <Header />
                 <Routes>
+                    <Route path={"/"} element={<Home/>}></Route>
                     <Route path={"/login"} element={<LoginPage/>}></Route>
                     <Route path={"/register"}  element={<RegisterPage/>} ></Route>
                     <Route path={"/profile"}  element={<ProfilePage/>} ></Route>
                     <Route path={"/users/:username"}  element={<UserProfile/>} ></Route>
                     <Route path={"/newTextArticle"}  element={<NewTextArticle/>} ></Route>
-                    <Route path={"/articles/:id"} element={<Article/>}></Route>
-                    <Route path={"/articles/category/:category"} element={<Articles/>}></Route>
+                    <Route path={"/articles/"} >
+                        <Route path={":id"} element={<Article/>}></Route>
+                        <Route path={"category/:category"} element={<ArticlesByCat/>}></Route>
+                        <Route path={"page/:page"} element={<Articles/>}></Route>
+                    </Route>
+
                 </Routes>
             </BrowserRouter>
             <Footer/>

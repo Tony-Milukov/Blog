@@ -112,9 +112,31 @@ const getArticleByCathegory = async (req:any, res:any) => {
     console.error(e);
   }
 };
-
+const getAllArticlesByPage = async (req:any, res:any) => {
+  const { page } = req.body;
+  try {
+    if (page) {
+      const articles = await Articles.getAllArticlesByPage(page);
+      if (articles.status) {
+        res.status(articles.status).send(articles);
+      } else {
+        res.send(articles);
+      }
+    } else {
+      throw 'no cathegory inputted';
+    }
+  } catch (e) {
+    res.send(messages.default);
+    console.error(e);
+  }
+};
 module.exports = {
-  newArticle, getArticleById, addComment, getCommentByArticleId, getArticleByUsername,
+  newArticle,
+  getArticleById,
+  addComment,
+  getCommentByArticleId,
+  getArticleByUsername,
   getArticleByCathegory,
+  getAllArticlesByPage,
 };
 export {};

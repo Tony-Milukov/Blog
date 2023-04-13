@@ -66,5 +66,9 @@
   "cathegoryNotExist": {
     "message": "Sorry, but this category doesnt exist, that's all we know :(",
     "status": 404
+  },
+  "pageEmpty": {
+    "message": "Sorry, but this page is empty, that's all we know :(",
+    "status": 404
   }
 }

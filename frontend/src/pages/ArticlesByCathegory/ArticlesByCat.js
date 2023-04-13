@@ -1,18 +1,18 @@
 import "../ArticlesByCathegory/articles.css"
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import getArticles from "./components/getArticles";
-import Article from "../usersProfile/components/Article"
+import getArticlesByCategory from "./components/getArticlesByCategory";
+import Article from "../../components/Article"
 import Popup from "../../components/Popup";
 import {useLocation} from "react-router-dom";
-const Articles = () => {
+const ArticlesByCat = () => {
     const location = useLocation()
     const {category} = useParams()
     const [articles, setArticles] = useState()
     const [loaded,setLoaded] = useState(false)
     useEffect(() => {
         const fetch = async () => {
-            const articles = await getArticles(category);
+            const articles = await getArticlesByCategory(category);
             console.log(articles)
             setArticles(articles)
             setLoaded(true)
@@ -28,10 +28,10 @@ const Articles = () => {
                         articles.map(article =>
                             <><Article article={article}/>
                                 <hr/>
-                            </>) : articles && articles.status == 404 ? <Popup message={articles.message} />: null
+                            </>) : loaded && articles && articles.status == 404 ? <Popup message={articles.message} />: null
                 }
             </div>
         </div>
     </>
 }
-export default Articles;
+export default ArticlesByCat;

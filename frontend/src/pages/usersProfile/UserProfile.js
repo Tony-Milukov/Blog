@@ -5,7 +5,7 @@ import SocialLink from "../Profile/components/SocialLink";
 import getUserProfile from "./components/getUserByUsername";
 import Popup from "../../components/Popup";
 import getArticlesByUsername from "./components/getArticlesByUsername";
-import Article from "./components/Article";
+import Article from "../../components/Article";
 import {useLocation} from 'react-router-dom';
 
 
