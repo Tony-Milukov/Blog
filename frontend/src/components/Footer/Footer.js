@@ -1,6 +1,4 @@
 import "./Footer.css"
-import {Link} from "react-router-dom";
-
 const Footer = () => {
     return <>
         <footer className="s-footer">
@@ -18,7 +16,6 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
-
     </>
 }
 export default Footer

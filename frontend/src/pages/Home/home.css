@@ -1,0 +1,17 @@
+.pageheader-content {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.moreArticlesBTN {
+    display: flex;
+    margin: 0 auto;
+    max-width: 143px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 50px;
+    color: black;
+}

@@ -2,7 +2,7 @@ import {useState} from "react";
 import {userStore} from "../../../store/user";
 
 const ChangeUserDataInput = (props) => {
-    if (props.changeType == "job" || props.changeType === "description" || props.changeType === "lastname" || props.changeType === "firstname" || props.changeType === "github_link" || props.changeType === "instagram_link") {
+    if (props.changeType === "job" || props.changeType === "description" || props.changeType === "lastname" || props.changeType === "firstname" || props.changeType === "github_link" || props.changeType === "instagram_link") {
         const token = userStore(state => state.userInfo.token)
 
         const [err, setErr] = useState(false)
@@ -28,7 +28,7 @@ const ChangeUserDataInput = (props) => {
                 try {
                     const message = await fetch("http://localhost:5000/user/changeUser", requestOptions)
                     const parsedMessage = await message.json();
-                    if (parsedMessage.status == 303) {
+                    if (parsedMessage.status === 303) {
                         setErr(parsedMessage)
                         console.log(err)
                     } else {

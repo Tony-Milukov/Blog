@@ -2,9 +2,9 @@ const pool = require('./db');
 const messages = require('../messages.json');
 
 class Articles {
-  static cathegories = ['programming', 'lifestyle', 'family', 'management', 'Travel', 'Work'];
+  static categories = ['programming', 'lifestyle', 'family', 'management', 'Travel', 'Work'];
 
-  static async newArticle(artycleType:string, owner:string, articleValue:string, title:string, cathegory:string) {
+  static async newArticle(artycleType: string, owner: string, articleValue: string, title: string, cathegory: string) {
     let sql = '';
     try {
       if (artycleType === 'text') {
@@ -20,7 +20,7 @@ class Articles {
     }
   }
 
-  static async getArticleById(id : number) {
+  static async getArticleById(id: number) {
     const sql = 'SELECT * FROM `text_article` WHERE id = ?';
     try {
       const [article] = await pool.query(sql, [id]);
@@ -34,7 +34,7 @@ class Articles {
     }
   }
 
-  static async getArticleByUsername(username : string) {
+  static async getArticleByUsername(username: string) {
     const sql = 'SELECT * FROM `text_article` WHERE owner = ?';
     try {
       const [article] = await pool.query(sql, [username]);
@@ -48,7 +48,7 @@ class Articles {
     }
   }
 
-  static async addComment(articleId:string, commentValue:string, owner:string) {
+  static async addComment(articleId: string, commentValue: string, owner: string) {
     const sql = 'INSERT INTO `comments`(`comment_value`, `date_created`, `owner`, `article_id`) VALUES (?,?,?,?)';
     try {
       const dateCreated = new Date().toJSON();
@@ -60,24 +60,25 @@ class Articles {
     }
   }
 
-  static async getCommentByArticleId(articleId:number) {
+  static async getCommentByArticleId(articleId: number) {
     const sql = 'SELECT * FROM `comments` WHERE `article_id` = ?';
     try {
       const [comment] = await pool.query(sql, [articleId]);
       if (Object.keys(comment).length >= 1) {
         return comment;
-      } return messages.commentErr;
+      }
+      return messages.commentErr;
     } catch (e) {
       console.log(e);
       return messages.default;
     }
   }
 
-  static async searchArticle(title:string) {
+  static async searchArticle(title: string) {
     const sql = 'SELECT * FROM `text_article` WHERE `title` LIKE ?';
     try {
       const [data] = await pool.query(sql, [`%${title}%`]);
-      return data.map((i:any) => ({
+      return data.map((i: any) => ({
         title: i.title,
         articleId: i.id,
         type: 'article',
@@ -88,10 +89,10 @@ class Articles {
     }
   }
 
-  static async getArticleByCathegory(cathegory:string) {
+  static async getArticleByCathegory(cathegory: string) {
     const sql = 'SELECT * FROM `text_article` WHERE `category` = ?';
     try {
-      if (this.cathegories.includes(cathegory)) {
+      if (this.categories.includes(cathegory)) {
         const [data] = await pool.query(sql, [cathegory]);
         if (data.length >= 1) {
           return data;
@@ -105,7 +106,7 @@ class Articles {
     }
   }
 
-  static async getAllArticlesByPage(page:number) {
+  static async getAllArticlesByPage(page: number) {
     const sql = 'SELECT * FROM text_article LIMIT 5 OFFSET ?';
     try {
       const [data] = await pool.query(sql, [page === 1 ? page : page * 5 - 4]);
@@ -118,6 +119,29 @@ class Articles {
       return messages.default;
     }
   }
+
+  static async getHomePageArticles() {
+    const choosedCats :any = [];
+    try {
+      const getRandomCatgs = async () => {
+        const category = this.categories[Math.floor(Math.random() * this.categories.length)];
+        (await this.getArticleByCathegory(category)).status || choosedCats.includes(category) ? await getRandomCatgs() : choosedCats.push(category);
+      };
+      while (choosedCats.length <= 2) {
+        await getRandomCatgs();
+      }
+      const articles = choosedCats.map(async (cat:any) => {
+        const catArticles = await this.getArticleByCathegory(cat);
+        return await catArticles[Math.floor(Math.random() * catArticles.length)];
+      });
+
+      return await Promise.all(articles);
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
 }
+
 module.exports = Articles;
 export {};

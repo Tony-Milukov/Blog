@@ -28,9 +28,9 @@ const Register = () => {
         e.preventDefault()
         setErrors({
             username: username.match(nameExp) ? false : true,
-            email: email.match(emailExp) ? false : true,
-            password: password.match(passwordExp) ? false : true,
-            passwordsMatch: password ? (password.match(repeatPassword) ? false : true) : true
+            email: !email.match(emailExp),
+            password: !password.match(passwordExp),
+            passwordsMatch: password ? (!password.match(repeatPassword)) : true
         })
         if (email && password && username) {
             if (username.match(nameExp) && email.match(emailExp) && password.match(passwordExp) && password.match(repeatPassword)) {
@@ -51,14 +51,14 @@ const Register = () => {
                     .then(response => response.text())
                     .then(result => {
                         let parsed = JSON.parse(result)
-                        if (parsed.status && parsed.status == 201) {
+                        if (parsed.status && parsed.status === 201) {
                             navigate("/login")
                         }
                         console.log(result)
                         setErrors({
-                            email: parsed.emailErr && parsed.emailErr.status == 303 ? parsed : null,
+                            email: parsed.emailErr && parsed.emailErr.status === 303 ? parsed : null,
                             password: null,
-                            username: parsed.usernameErr && parsed.usernameErr.status == 303 ? parsed : null,
+                            username: parsed.usernameErr && parsed.usernameErr.status === 303 ? parsed : null,
                         })
 
                     })

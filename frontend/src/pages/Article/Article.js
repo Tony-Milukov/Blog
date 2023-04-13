@@ -54,10 +54,8 @@ const Article = () => {
 
     const addComment_ = async () => {
         if (newComment) {
-
             await getComments(article.id)
             const result = await addComment(article.id, newComment, article.owner, token)
-
             //I can not use my hook useAuth here
             if(!result || !token) {
                 logout()
@@ -66,7 +64,6 @@ const Article = () => {
             setNewComment("")
             const comments = await getComments(article.id)
             setComments(comments)
-
         }
     }
 

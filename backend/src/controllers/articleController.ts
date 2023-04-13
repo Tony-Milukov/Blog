@@ -130,6 +130,19 @@ const getAllArticlesByPage = async (req:any, res:any) => {
     console.error(e);
   }
 };
+const getHomePageArticles = async (req:any, res:any) => {
+  try {
+    const articles = await Articles.getHomePageArticles();
+    if (articles && articles.status) {
+      res.status(articles.status).send(articles);
+    } else {
+      res.send(articles);
+    }
+  } catch (e) {
+    res.send(messages.default);
+    console.error(e);
+  }
+};
 module.exports = {
   newArticle,
   getArticleById,
@@ -138,5 +151,6 @@ module.exports = {
   getArticleByUsername,
   getArticleByCathegory,
   getAllArticlesByPage,
+  getHomePageArticles,
 };
 export {};

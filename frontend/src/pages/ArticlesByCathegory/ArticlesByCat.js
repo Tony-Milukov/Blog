@@ -28,7 +28,7 @@ const ArticlesByCat = () => {
                         articles.map(article =>
                             <><Article article={article}/>
                                 <hr/>
-                            </>) : loaded && articles && articles.status == 404 ? <Popup message={articles.message} />: null
+                            </>) : loaded && articles && articles.status === 404 ? <Popup message={articles.message} />: null
                 }
             </div>
         </div>

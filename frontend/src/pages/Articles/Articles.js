@@ -29,7 +29,7 @@ const Articles = () => {
                             articles.map(article =>
                                 <><Article article={article}/>
                                     <hr/>
-                                </>) : loaded && articles && articles.status == 404 ?
+                                </>) : loaded && articles && articles.status === 404 ?
                                 <Popup message={articles.message}/> : null
                     }
                 </div>

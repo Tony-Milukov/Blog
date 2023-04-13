@@ -10,7 +10,6 @@ import NewTextArticle from "./pages/newArticle/TextArticle/NewTextArticle";
 import Article from "./pages/Article/Article";
 import ArticlesByCat from "./pages/ArticlesByCathegory/ArticlesByCat";
 import Articles from "./pages/Articles/Articles";
-import Popup from "./components/Popup";
 import Home from "./pages/Home/Home";
 const Router = () => {
     return (

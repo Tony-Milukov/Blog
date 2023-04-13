@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {userStore} from '../../../store/user';
 import getUser from "../../../pages/Profile/components/getUser";
 import {useEffect, useState} from "react";

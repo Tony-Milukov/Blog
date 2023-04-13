@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const passport = require('../Auth/passport');
 const {
   newArticle, getArticleById, getArticleByUsername, addComment, getCommentByArticleId,getAllArticlesByPage,
+  getHomePageArticles,
   getArticleByCathegory,
 } = require('../controllers/ArticleController');
 
@@ -16,6 +17,6 @@ router.put('/addComment', passport.authenticate('jwt', { session: false }), addC
 router.post('/getCommentsByArticleId', getCommentByArticleId);
 router.post('/getArticleByCathegory', getArticleByCathegory);
 router.post('/getAllArticlesByPage', getAllArticlesByPage);
-
+router.post('/getHomePageArticles', getHomePageArticles);
 module.exports = router;
 export {};

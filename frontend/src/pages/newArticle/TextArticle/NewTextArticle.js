@@ -1,6 +1,6 @@
 import ReactQuill from 'react-quill';
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {userStore} from "../../../store/user";
 import "./newTextArticle.css"
 import config from "../components/quillConfig";
