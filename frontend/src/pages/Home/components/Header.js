@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import getHomePageArticles from "./getHomePageArticles";
+import getHomePageArticles from "../../../components/API/requests/articles/getHomePageArticles";
 import HeaderArticle from "./HeaderArticle";
 
 const Header = () => {
@@ -7,7 +7,7 @@ const Header = () => {
     const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         const fetch = async () => {
-            const headerArticles = await getHomePageArticles()
+            const {headerArticles} = await getHomePageArticles()
             setHeaderArticles(headerArticles);
             setLoaded(true)
         }

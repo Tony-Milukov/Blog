@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {userStore} from '../../../store/user';
-import getUser from "../../../pages/Profile/components/getUser";
+import getUser from "../../API/requests/user/getUser";
 import {useEffect, useState} from "react";
 
 

@@ -3,7 +3,7 @@ import {userStore} from "../../store/user";
 import {useEffect, useState} from "react";
 import "./profile.css"
 import ChangeUserDataInput from "./components/ChangeUserDataInput";
-import getUser from "./components/getUser";
+import getUser from "../../components/API/requests/user/getUser";
 import useAuth from "../../hooks/useAuth";
 
 const Profile = () => {

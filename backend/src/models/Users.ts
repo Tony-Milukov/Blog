@@ -93,9 +93,9 @@ class Users {
   static async registerUser(email: string, password: string, username: string) {
     const hash = await hashPassword(password);
     try {
-      const doesUsernameExist = await this.getUserByUsername(username);
+      const doesUsernameExist = (await this.getUserByUsername(username)).username ?? null;
       const doesEmailExist = await this.getUserByEmail(email);
-      if (!doesEmailExist && doesUsernameExist.status === 404) {
+      if (!doesEmailExist && !doesUsernameExist) {
         const sql = 'INSERT INTO `users`(`email`, `password`,`username`) VALUES (?,?,?)';
         pool.query(sql, [email, hash, username]);
         return messages.userAdded;

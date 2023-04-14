@@ -1,7 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import "./articles.css";
 import {useEffect, useState} from "react";
-import getArticlesByPage from "./components/getArticlesByPage";
+import getArticlesByPage from "../../components/API/requests/articles/getArticlesByPage";
 import Popup from "../../components/Popup";
 import Article from "../../components/Article";
 import {useLocation} from "react-router-dom";

@@ -11,6 +11,7 @@ import Article from "./pages/Article/Article";
 import ArticlesByCat from "./pages/ArticlesByCathegory/ArticlesByCat";
 import Articles from "./pages/Articles/Articles";
 import Home from "./pages/Home/Home";
+import Popup from "./components/Popup";
 const Router = () => {
     return (
         <div className={"Routers"}>
@@ -28,7 +29,7 @@ const Router = () => {
                         <Route path={"category/:category"} element={<ArticlesByCat/>}></Route>
                         <Route path={"page/:page"} element={<Articles/>}></Route>
                     </Route>
-
+                    <Route path={"*"} element={<Popup/>}></Route>
                 </Routes>
             </BrowserRouter>
             <Footer/>

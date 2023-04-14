@@ -1,3 +1,4 @@
+
 const pool = require('./db');
 const messages = require('../messages.json');
 
@@ -89,7 +90,7 @@ class Articles {
     }
   }
 
-  static async getArticleByCathegory(cathegory: string) {
+  static async getArticleByCategory(cathegory: string) {
     const sql = 'SELECT * FROM `text_article` WHERE `category` = ?';
     try {
       if (this.categories.includes(cathegory)) {
@@ -122,20 +123,23 @@ class Articles {
 
   static async getHomePageArticles() {
     const choosedCats :any = [];
+    const sql = "SELECT * FROM text_article ORDER BY RAND() LIMIT 3"
     try {
       const getRandomCatgs = async () => {
         const category = this.categories[Math.floor(Math.random() * this.categories.length)];
-        (await this.getArticleByCathegory(category)).status || choosedCats.includes(category) ? await getRandomCatgs() : choosedCats.push(category);
+        (await this.getArticleByCategory(category)).status || choosedCats.includes(category) ? await getRandomCatgs() : choosedCats.push(category);
       };
       while (choosedCats.length <= 2) {
         await getRandomCatgs();
       }
-      const articles = choosedCats.map(async (cat:any) => {
-        const catArticles = await this.getArticleByCathegory(cat);
+      const headerArticles = choosedCats.map(async (cat:any) => {
+        const catArticles = await this.getArticleByCategory(cat);
         return await catArticles[Math.floor(Math.random() * catArticles.length)];
       });
 
-      return await Promise.all(articles);
+      const [articles] = await pool.query(sql)
+
+      return {headerArticles: await Promise.all(headerArticles),articles};
     } catch (e) {
       console.error(e);
       return messages.default;

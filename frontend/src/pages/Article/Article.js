@@ -2,16 +2,17 @@ import React from 'react';
 
 import {Link, useNavigate, useParams} from "react-router-dom";
 import "./article.css"
-import getArticle from "./compotnets/getArticle"
+import getArticle from "../../components/API/requests/articles/getArticle"
 import {useEffect, useState} from "react";
-import getUserProfile from "../usersProfile/components/getUserByUsername";
+import getUserByUsername from "../../components/API/requests/user/getUserByUsername";
 import SocialLink from "../usersProfile/components/SocialLink";
 import Comment from "./compotnets/Comment";
 import Popup from "../../components/Popup";
-import getComments from "./compotnets/getComments";
-import addComment from "./compotnets/addComment";
+import getComments from "../../components/API/requests/articles/getComments";
+import addComment from "../../components/API/requests/articles/addComment";
 import {userStore} from "../../store/user";
 import {useLocation} from 'react-router-dom';
+import fetchData from "../../components/API/fetchData";
 
 const Article = () => {
 
@@ -19,25 +20,26 @@ const Article = () => {
     const logout = userStore((state) => state.logout)
     const {id} = useParams()
     const [article, setArticle] = useState()
-    const [owner, setOwner] = useState("null")
+    const [owner, setOwner] = useState()
     const [loaded, setLoaded] = useState()
     const [comments, setComments] = useState()
-    const [newComment, setNewComment] = useState()
+    const [commentValue, setCommentValue] = useState()
     const [date, setDate] = useState()
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
 
     //I know, this is not good, but without this  search will not work
     const location = useLocation()
 
     useEffect(() => {
         const fetch = async () => {
-            const article = await getArticle(id, setArticle, setOwner)
+            const article = await getArticle(id)
+            const userProfile = await getUserByUsername(article.owner)
+            setOwner(userProfile)
+            const comments = await getComments(id);
+
             setArticle(article)
             const date_created = new Date(article["date_created"])
-            setDate(`${monthNames[date_created.getMonth()]} ${date_created.getDate()},`)
-            const userProfile = await getUserProfile(article.owner);
-            setOwner(userProfile)
-            const comments = await getComments(id)
+            setDate(`${monthNames[date_created.getMonth()]} ${date_created.getDate()}, `)
             setComments(comments)
             setLoaded(true)
         }
@@ -53,16 +55,17 @@ const Article = () => {
     ];
 
     const addComment_ = async () => {
-        if (newComment) {
-            await getComments(article.id)
-            const result = await addComment(article.id, newComment, article.owner, token)
+        if (commentValue && owner) {
+            const result = await addComment(id,commentValue,owner.username,token)
+
             //I can not use my hook useAuth here
-            if(!result || !token) {
+            if (result.status === 401 || !token) {
                 logout()
                 navigate("/login")
             }
-            setNewComment("")
-            const comments = await getComments(article.id)
+
+            setCommentValue("")
+            const comments = await getComments(id);
             setComments(comments)
         }
     }
@@ -78,7 +81,8 @@ const Article = () => {
                     <div className={"underTitle"}>
                     <span
                         className={"articleData"}>{date}</span>
-                        <span className={"articleCathegory"}>In «<Link to={`/articles/category/${article.category}`}>{article.category}</Link>»</span>
+                        <span className={"articleCathegory"}>In «<Link
+                            to={`/articles/category/${article.category}`}>{article.category}</Link>»</span>
 
                     </div>
                 </header>
@@ -134,7 +138,8 @@ const Article = () => {
                                 <h3 className="h2">Add Comment</h3>
                                 <div>
                                     <div className="message form-field">
-                                            <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)}
+                                            <textarea value={commentValue}
+                                                      onChange={(e) => setCommentValue(e.target.value)}
                                                       name="cMessage" id="cMessage" className="full-width"
                                                       placeholder="Your Message"></textarea>
                                     </div>

@@ -1,19 +1,21 @@
 import "./home.css";
 import {useEffect, useState} from "react";
-import getArticlesByPage from "../Articles/components/getArticlesByPage";
 import Header from "./components/Header";
 import Popup from "../../components/Popup";
 import Article from "../../components/Article";
 import {Link} from "react-router-dom";
+import getHomePageArticles from "../../components/API/requests/articles/getHomePageArticles";
+
 
 const HomePage = () => {
     const [articles, setArticles] = useState()
     const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         const fetch = async () => {
-            const articles = await getArticlesByPage(1)
+            const {articles} = await getHomePageArticles()
+            console.log(articles)
             setArticles(articles);
-            setLoaded(true)
+            setLoaded(true);
         }
         fetch()
     }, [])

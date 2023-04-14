@@ -2,9 +2,9 @@ import "./userProfile.css"
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SocialLink from "../Profile/components/SocialLink";
-import getUserProfile from "./components/getUserByUsername";
+import getUserProfile from "../../components/API/requests/user/getUserByUsername";
 import Popup from "../../components/Popup";
-import getArticlesByUsername from "./components/getArticlesByUsername";
+import getArticlesByUsername from "../../components/API/requests/articles/getArticlesByUsername";
 import Article from "../../components/Article";
 import {useLocation} from 'react-router-dom';
 

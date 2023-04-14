@@ -1,7 +1,7 @@
 import "../ArticlesByCathegory/articles.css"
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import getArticlesByCategory from "./components/getArticlesByCategory";
+import getArticlesByCategory from "../../components/API/requests/articles/getArticlesByCategory";
 import Article from "../../components/Article"
 import Popup from "../../components/Popup";
 import {useLocation} from "react-router-dom";

@@ -4,7 +4,7 @@ import {useState} from "react";
 import {userStore} from "../../../store/user";
 import "./newTextArticle.css"
 import config from "../components/quillConfig";
-import sendRequest from "../components/sendRequest";
+import addNewArticle from "../../../components/API/requests/articles/addNewArticle";
 import 'react-quill/dist/quill.snow.css';
 import messages from "../messages"
 import useAuth from "../../../hooks/useAuth";
@@ -31,7 +31,7 @@ const NewTextArticle = () => {
             cathegory: cathegory ? false : true,
         })
             if (title && articleValue && cathegory && cathegory && valueLength >= 200) {
-                const message = await sendRequest(articleValue, title, cathegory, token)
+                const message = await addNewArticle(articleValue, title, cathegory, token)
                 if (message.status !== 404) {
                     navigate(`/articles/${message.articleId}`)
                 } else {

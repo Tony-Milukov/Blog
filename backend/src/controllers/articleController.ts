@@ -94,11 +94,11 @@ const getArticleByUsername = async (req:any, res:any) => {
     console.error(e);
   }
 };
-const getArticleByCathegory = async (req:any, res:any) => {
-  const { cathegory } = req.body;
+const getArticleByCategory = async (req:any, res:any) => {
+  const { category } = req.body;
   try {
-    if (cathegory) {
-      const articles = await Articles.getArticleByCathegory(cathegory);
+    if (category) {
+      const articles = await Articles.getArticleByCategory(category);
       if (articles.status) {
         res.status(articles.status).send(articles);
       } else {
@@ -133,8 +133,8 @@ const getAllArticlesByPage = async (req:any, res:any) => {
 const getHomePageArticles = async (req:any, res:any) => {
   try {
     const articles = await Articles.getHomePageArticles();
-    if (articles && articles.status) {
-      res.status(articles.status).send(articles);
+    if (!articles) {
+     throw new Error("error");
     } else {
       res.send(articles);
     }
@@ -149,7 +149,7 @@ module.exports = {
   addComment,
   getCommentByArticleId,
   getArticleByUsername,
-  getArticleByCathegory,
+  getArticleByCategory,
   getAllArticlesByPage,
   getHomePageArticles,
 };

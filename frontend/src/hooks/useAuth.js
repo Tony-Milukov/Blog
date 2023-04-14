@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import getUser from "../pages/Profile/components/getUser";
+import getUser from "../components/API/requests/user/getUser";
 import {useNavigate} from "react-router-dom";
 import {userStore} from "../store/user";
 
