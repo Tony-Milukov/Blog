@@ -1,3 +1,4 @@
+import {type} from "os";
 
 const pool = require('./db');
 const messages = require('../messages.json');
@@ -90,11 +91,13 @@ class Articles {
     }
   }
 
-  static async getArticleByCategory(cathegory: string) {
-    const sql = 'SELECT * FROM `text_article` WHERE `category` = ?';
+  static async getArticleByCategory(category: string, page:number = 0) {
+    const articleByPageSql = "SELECT * FROM `text_article` WHERE `category` = ? LIMIT 5 OFFSET ?"
+    const allArticlesSql = "SELECT * FROM `text_article` WHERE `category` = ?"
+    const articleByPageArgs = [category, page === 1 ? 0 : page * 5 - 4];
     try {
-      if (this.categories.includes(cathegory)) {
-        const [data] = await pool.query(sql, [cathegory]);
+      if (this.categories.includes(category)) {
+        const [data] = await pool.query(page ? articleByPageSql : allArticlesSql, page  ?  articleByPageArgs : [category]);
         if (data.length >= 1) {
           return data;
         }

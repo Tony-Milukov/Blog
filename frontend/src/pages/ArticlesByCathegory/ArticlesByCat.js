@@ -5,14 +5,15 @@ import getArticlesByCategory from "../../components/API/requests/articles/getArt
 import Article from "../../components/Article"
 import Popup from "../../components/Popup";
 import {useLocation} from "react-router-dom";
+import PaginationController from "../../components/Pagination";
 const ArticlesByCat = () => {
     const location = useLocation()
-    const {category} = useParams()
+    const {category,page} = useParams()
     const [articles, setArticles] = useState()
     const [loaded,setLoaded] = useState(false)
     useEffect(() => {
         const fetch = async () => {
-            const articles = await getArticlesByCategory(category);
+            const articles = await getArticlesByCategory(category,page);
             console.log(articles)
             setArticles(articles)
             setLoaded(true)
@@ -32,6 +33,7 @@ const ArticlesByCat = () => {
                 }
             </div>
         </div>
+        <PaginationController page={page}/>
     </>
 }
 export default ArticlesByCat;

@@ -82,7 +82,7 @@ const Article = () => {
                     <span
                         className={"articleData"}>{date}</span>
                         <span className={"articleCathegory"}>In «<Link
-                            to={`/articles/category/${article.category}`}>{article.category}</Link>»</span>
+                            to={`/articles/category/${article.category}/page/1`}>{article.category}</Link>»</span>
 
                     </div>
                 </header>

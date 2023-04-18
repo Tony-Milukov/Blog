@@ -3,6 +3,7 @@ const hashPassword = require('../Auth/hashThePassword');
 const { decodeUser, getToken } = require('../Auth/decodeUser');
 const messages = require('../messages.json');
 const signToken = require('../Auth/signToken');
+const fs = require('fs');
 
 const pool = require('../models/db');
 
@@ -96,7 +97,7 @@ class Users {
       const doesUsernameExist = (await this.getUserByUsername(username)).username ?? null;
       const doesEmailExist = await this.getUserByEmail(email);
       if (!doesEmailExist && !doesUsernameExist) {
-        const sql = 'INSERT INTO `users`(`email`, `password`,`username`) VALUES (?,?,?)';
+        const sql = 'INSERT INTO `users`(`email`, `password`,`username`,`profile_pic_path`) VALUES (?,?,?,"default.jpg")';
         pool.query(sql, [email, hash, username]);
         return messages.userAdded;
       }
@@ -141,8 +142,60 @@ class Users {
       console.error(e);
     }
   }
+  static async getProfilePicturePathByEmail(email:string) {
+    const sql = 'SELECT `profile_pic_path` FROM `users` WHERE `email` = ?';
+    try {
+      const [data] = await pool.query(sql, [email]);
+      const profilePicPath = data[0].profile_pic_path
+      if(profilePicPath) {
+        return profilePicPath;
+      } else {
+        throw new Error("ERROR")
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  static async getProfilePictureFile(email:string) {
+    try {
+        const picturePath  = await this.getProfilePicturePathByEmail(email);
+        console.log(picturePath)
+     const picture =  await fs.promises.readFile(`profilePictures/${picturePath}`);
+     return picture
+    } catch (e) {
+      return messages.default;
+      console.error(e);
+    }
+  }
+  static async updateUserPicture(filename:string,email:string) {
+    const sql = 'UPDATE `users` SET `profile_pic_path`= ? where email = ?';
+    try {
+      //get old path to delete it
+      const oldPicturePath =
+          //if this is not default image
+          await this.getProfilePicturePathByEmail(email) !== "default.jpg"
+          ? `profilePictures/${await this.getProfilePicturePathByEmail(email)}` : false
+
+      //if this is  default image then, delete
+      if(oldPicturePath) {
+        fs.unlink(oldPicturePath, (err:any) => err ? console.error(err) : null);
+      }
+      const [data] = await pool.query(sql, [filename,email]);
+      if(data) {
+        return filename;
+      } else {
+        throw new Error("ERROR")
+      }
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
+
 }
 
 module.exports = Users;
 export {};
+
 

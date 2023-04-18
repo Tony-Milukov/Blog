@@ -95,10 +95,10 @@ const getArticleByUsername = async (req:any, res:any) => {
   }
 };
 const getArticleByCategory = async (req:any, res:any) => {
-  const { category } = req.body;
+  const { category,page } = req.body;
   try {
     if (category) {
-      const articles = await Articles.getArticleByCategory(category);
+      const articles = await Articles.getArticleByCategory(category,page);
       if (articles.status) {
         res.status(articles.status).send(articles);
       } else {

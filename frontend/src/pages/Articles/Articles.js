@@ -1,13 +1,14 @@
-import {Link, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import "./articles.css";
 import {useEffect, useState} from "react";
 import getArticlesByPage from "../../components/API/requests/articles/getArticlesByPage";
 import Popup from "../../components/Popup";
 import Article from "../../components/Article";
 import {useLocation} from "react-router-dom";
+import Pagination from "../../components/Pagination";
 
 const Articles = () => {
-    const {page} = useParams()
+    const {page} = useParams();
     const [articles, setArticles] = useState()
     const [loaded, setLoaded] = useState(false)
     const location = useLocation()
@@ -34,11 +35,7 @@ const Articles = () => {
                     }
                 </div>
             </div>
-            <div className="paginationContainer">
-                <Link to={`/articles/page/${parseInt(page) !== 1 ? parseInt(page)-1: page}`}>&laquo; </Link>
-
-                <Link to={`/articles/page/${parseInt(page) + 1}`}>&raquo;</Link>
-            </div>
+            <Pagination page={page}/>
         </>
     )
 }

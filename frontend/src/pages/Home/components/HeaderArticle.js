@@ -26,7 +26,7 @@ const HeaderArticle = ({article, index}) => {
                 <div className="entry" style={{backgroundImage: `url('${images[article.category]}')`}}>
                     <div className="entry__content">
                         <span className="entry__category"><Link
-                            to={`/articles/category/${article.category}`}>{article.category}</Link></span>
+                            to={`/articles/category/${article.category}/page/1`}>{article.category}</Link></span>
 
 
                         <h1><Link to={`/articles/${article.id}`}>{article.title}</Link></h1>

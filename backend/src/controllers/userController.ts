@@ -1,7 +1,7 @@
 const { decodeUser } = require('../Auth/decodeUser');
 const Users = require('../models/Users');
 const messages = require('../messages.json');
-
+const  path = require("path")
 const loginUser = async (req:any, res:any) => {
   const { email, password } = req.body;
   try {
@@ -74,12 +74,44 @@ const getUserProfileByUsername = async (req:any, res:any) => {
   }
 };
 
+const updateUserPicture = async (req:any, res:any) => {
+  try {
+    const email = await decodeUser(req);
+    const result = await Users.updateUserPicture(path.basename(req.file.path),email)
+    if (!result.status) {
+      res.json(result);
+    } else {
+      res.status(result.status).json(result);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(messages.default.status).json(messages.default);
+  }
+};
+const getProfilePictureFile = async (req:any, res:any) => {
+  try {
+    const email = await decodeUser(req);
+    const result = await Users.getProfilePicturePathByEmail(email)
+    console.log(`profilePictures/${result}`)
+    if (!result.status) {
+      res.sendFile(`profilePictures/${result}`);
+    } else {
+      res.status(result.status).json(result);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(messages.default.status).json(messages.default);
+  }
+};
+
 module.exports = {
   loginUser,
   registerUser,
   getUser,
   changeUserData,
   getUserProfileByUsername,
+  updateUserPicture,
+  getProfilePictureFile
 };
 
 export {};

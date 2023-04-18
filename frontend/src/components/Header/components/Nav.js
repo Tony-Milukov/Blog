@@ -26,7 +26,7 @@ const Nav = () => {
             <li className="has-children">
                 <a title="">Categories</a>
                 <ul className="sub-menu">
-                    {categories.map(category => <li><Link to={`articles/category/${category}`}>{category}</Link></li>)}
+                    {categories.map(category => <li><Link to={`articles/category/${category}/page/1`}>{category}</Link></li>)}
                 </ul>
             </li>
 

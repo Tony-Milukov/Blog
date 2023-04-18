@@ -1,8 +1,9 @@
 import fetchData from "../../fetchData";
 
-const getArticlesByCategory  =  async (category) => {
+const getArticlesByCategory  =  async (category,page) => {
     return  await fetchData("http://localhost:5000/articles/getArticleByCategory", {
-        "category": category
+        category,
+        page: parseFloat(page),
     })
 }
 export default getArticlesByCategory
