@@ -97,7 +97,7 @@ class Users {
       const doesUsernameExist = (await this.getUserByUsername(username)).username ?? null;
       const doesEmailExist = await this.getUserByEmail(email);
       if (!doesEmailExist && !doesUsernameExist) {
-        const sql = 'INSERT INTO `users`(`email`, `password`,`username`,`profile_pic_path`) VALUES (?,?,?,"default.jpg")';
+        const sql = 'INSERT INTO `users`(`email`, `password`,`username`,`avatar`) VALUES (?,?,?,"default.jpg")';
         pool.query(sql, [email, hash, username]);
         return messages.userAdded;
       }
@@ -140,47 +140,56 @@ class Users {
       }));
     } catch (e) {
       console.error(e);
+      return messages.default;
     }
   }
-  // static async getProfilePicturePathByEmail(email:string) {
-  //   const sql = 'SELECT `profile_pic_path` FROM `users` WHERE `email` = ?';
-  //   try {
-  //     const [data] = await pool.query(sql, [email]);
-  //     const profilePicPath = data[0].profile_pic_path
-  //     if(profilePicPath) {
-  //       return  `profilePictures/${profilePicPath}`;
-  //     } else {
-  //       throw new Error("ERROR")
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
-  //
-  // static async updateUserPicture(filename:string,email:string) {
-  //   const sql = 'UPDATE `users` SET `profile_pic_path`= ? where email = ?';
-  //   try {
-  //     //get old path to delete it
-  //     const oldPicturePath =
-  //         //if this is not default image
-  //         await this.getProfilePicturePathByEmail(email) !== "default.jpg"
-  //         ? `profilePictures/${await this.getProfilePicturePathByEmail(email)}` : false
-  //
-  //     //if this is  default image then, delete
-  //     if(oldPicturePath) {
-  //       fs.unlink(oldPicturePath, (err:any) => err ? console.error(err) : null);
-  //     }
-  //     const [data] = await pool.query(sql, [filename,email]);
-  //     if(data) {
-  //       return filename;
-  //     } else {
-  //       throw new Error("ERROR")
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //     return messages.default;
-  //   }
-  // }
+
+  static async getAvatar(email:string) {
+    const sql = 'SELECT `avatar` FROM `users` WHERE `email` = ?';
+    try {
+      const [data] = await pool.query(sql, [email]);
+      const avatar = data[0].avatar
+      console.log(avatar)
+      if(avatar) {
+        return  avatar;
+      } else {
+        throw new Error("ERROR")
+
+      }
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
+
+  static async updateAvatar(filename:string,email:string) {
+    const sql = 'UPDATE `users` SET `avatar`= ? where email = ?';
+    try {
+      //get old path to delete it
+      const oldPicturePath =
+          //if this is not default image
+          await this.getAvatar(email) !== "default.jpg"
+          ? `static/avatars/${await this.getAvatar(email)}` : false
+      //if this is  default image then, delete
+      if(oldPicturePath) {
+        fs.unlink(oldPicturePath, (err:any) => {
+          if(err) {
+            console.error(err)
+          }
+        });
+      }
+      const [data] = await pool.query(sql, [filename,email]);
+
+      if(data) {
+        return filename;
+      } else {
+        throw new Error("ERROR")
+      }
+    } catch (e) {
+      console.error(e);
+      return messages.default;
+    }
+  }
 
 }
 

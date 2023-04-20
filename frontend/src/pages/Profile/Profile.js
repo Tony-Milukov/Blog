@@ -5,20 +5,26 @@ import "./profile.css"
 import ChangeUserDataInput from "./components/ChangeUserDataInput";
 import getUser from "../../components/API/requests/user/getUser";
 import useAuth from "../../hooks/useAuth";
+import updateAvatar from "../../components/API/requests/user/updateAvatar";
 
 const Profile = () => {
     const token = userStore(state => state.userInfo.token)
     useAuth(token)
 
     const [user, setUser] = useState(null);
+    const [avatarLink,setAvatarLink] = useState(null)
     const refresh = async () => {
         const user = await getUser(token)
         setUser(user)
+        setAvatarLink(`http://localhost:5000/${user.avatar}`)
     }
     useEffect(() => {
         refresh()
     }, [])
-
+    const update = async (e)=> {
+        console.log(await (await updateAvatar(e.target.files[0],token)))
+        refresh()
+    }
     if (token && user) {
         return <>
 
@@ -26,10 +32,15 @@ const Profile = () => {
                 <div className="view-account">
                     <section className="module">
                         <div className="module-inner">
+
                             <div className="side-bar">
                                 <div className="user-info">
                                     <img className=" img-profile img-circle img-responsive center-block"
-                                         src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""/>
+                                         src={avatarLink} alt=""/>
+                                    <div className={"uploadImgage"}>
+                                        <label className={"uploadAvatar"} htmlFor="file-upload">Choose image</label>
+                                        <input id="file-upload" onChange={(e) => update(e)} accept=".jpg, .jpeg, .png" aria-label="Upload file" type="file"/>
+                                    </div>
                                     <div className={"usernameMain"}>
                                         <Link to={`/users/${user.username}`}> @{user ? user.username ?? null : null}</Link>
                                         <label className="label label-info">{user.job}</label>

@@ -1,7 +1,7 @@
 import fetchData from "../../fetchData";
 
 const getUserByUsername = async (username) => {
-    return await fetchData("http://localhost:5000/user/getUserProfile", {
+    return await fetchData("user/getUserProfile", {
         "username": username
     })
 }

@@ -13,6 +13,7 @@ import addComment from "../../components/API/requests/articles/addComment";
 import {userStore} from "../../store/user";
 import {useLocation} from 'react-router-dom';
 import fetchData from "../../components/API/fetchData";
+import getUser from "../../components/API/requests/user/getUser";
 
 const Article = () => {
 
@@ -25,6 +26,7 @@ const Article = () => {
     const [comments, setComments] = useState()
     const [commentValue, setCommentValue] = useState()
     const [date, setDate] = useState()
+    const [user,setUser] = useState()
     const navigate = useNavigate()
 
     //I know, this is not good, but without this  search will not work
@@ -35,8 +37,9 @@ const Article = () => {
             const article = await getArticle(id)
             const userProfile = await getUserByUsername(article.owner)
             setOwner(userProfile)
+            setUser(await getUser(token))
+            console.log(await getUser(token))
             const comments = await getComments(id);
-
             setArticle(article)
             const date_created = new Date(article["date_created"])
             setDate(`${monthNames[date_created.getMonth()]} ${date_created.getDate()}, `)
@@ -56,7 +59,7 @@ const Article = () => {
 
     const addComment_ = async () => {
         if (commentValue && owner) {
-            const result = await addComment(id,commentValue,owner.username,token)
+            const result = await addComment(id,commentValue,await user.username,token)
 
             //I can not use my hook useAuth here
             if (result.status === 401 || !token) {
@@ -69,7 +72,6 @@ const Article = () => {
             setComments(comments)
         }
     }
-
 
     return (
         article && article.title && loaded ? <>
@@ -92,7 +94,7 @@ const Article = () => {
                 </main>
                 <div className="author_article">
                     <div className="s-content__author">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""/>
+                        <img src={`http://localhost:5000/${owner.avatar}`} alt=""/>
                         <div className="s-content__author-about">
                             <h4 className="s-content__author-name">
                                 <Link to={`/users/${owner.username}`}>@{owner.username}</Link>
@@ -123,7 +125,7 @@ const Article = () => {
                                 <>
                                     <h3 className="h2"> {comments.length} Comment{comments.length === 1 ? "" : "s"}</h3>
                                     <ol className="commentlist">
-                                        {comments ? comments.map(comment => {
+                                        {comments ? comments.map((comment) => {
                                             const date_created = new Date(comment.date_created)
                                             const date = `${monthNames[date_created.getMonth()]} ${date_created.getDate()} @ ${date_created.getHours()}:${date_created.getMinutes()}`
                                             return <Comment date={date}

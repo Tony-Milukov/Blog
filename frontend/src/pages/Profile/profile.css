@@ -690,3 +690,19 @@ button {
 .container {
     min-height: 100vh;
 }
+.img-profile {
+    object-fit: cover;
+}
+#file-upload {
+    display: none;
+}
+.uploadAvatar {
+    cursor: pointer;
+    color: #333;
+    background-color: #eee;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5x;
+    margin-bottom: 15px;
+}

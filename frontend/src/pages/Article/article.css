@@ -96,3 +96,9 @@
 .articleMain .ql-syntax {
     background: #e5e5e5;
 }
+.s-content__main img {
+    object-fit: contain;
+}
+.avatar {
+    object-fit: contain;
+}

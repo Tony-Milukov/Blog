@@ -1,25 +1,38 @@
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import getUserByUsername from "../../../components/API/requests/user/getUserByUsername";
 
 
 const Comment = (props) => {
-  return ( <li className="depth-1 comment">
-    <div className="comment__avatar">
-      <img width="50" height="50" className="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png"
-           alt=""/>
-    </div>
-    <div className="comment__content">
-      <div className="comment__info">
-        <cite><Link to={`/users/${props.username}`}>@{props.username}</Link></cite>
-        <div className="comment__meta">
-          <time className="comment__time">{props.date}</time>
+    const [avatarLink, setAvatarLink] = useState()
+    const [isLoaded, setLoaded] = useState(false)
+    useEffect(() => {
+        const fetch = async () => {
+            const user = await getUserByUsername(props.username)
+            setAvatarLink(user.avatar)
+            console.log(avatarLink)
+            setLoaded(true)
+        }
+        fetch()
+    },[])
+    return (isLoaded ? <li className="depth-1 comment">
+        <div className="comment__avatar">
+            <img width="50" height="50" className="avatar" src={`http://localhost:5000/${avatarLink}`}
+                 alt=""/>
         </div>
-      </div>
+        <div className="comment__content">
+            <div className="comment__info">
+                <cite><Link to={`/users/${props.username}`}>@{props.username}</Link></cite>
+                <div className="comment__meta">
+                    <time className="comment__time">{props.date}</time>
+                </div>
+            </div>
 
-      <div className="comment__text">
-        <p>{props.commentValue}</p>
-      </div>
+            <div className="comment__text">
+                <p>{props.commentValue}</p>
+            </div>
 
-    </div>
-  </li>)
+        </div>
+    </li> : null)
 }
 export default Comment

@@ -1,7 +1,7 @@
 import fetchData from "../../fetchData";
 
 const login = async (email,password) => {
-    return await fetchData("http://localhost:5000/user/login", {
+    return await fetchData("user/login", {
         email,
         password
     })

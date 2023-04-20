@@ -44,7 +44,7 @@ const UserProfile = () => {
                         <div className="left col-lg-4">
                             <div className="photo-left">
                                 <img className={"photo"}
-                                     src="https://bootdey.com/img/Content/avatar/avatar1.png"/>
+                                     src={`http://localhost:5000/${userProfile.avatar}`}/>
                                 <div className="active"></div>
                             </div>
                             <h4 className="name">@{userProfile ? userProfile.username ?? null : null}</h4>

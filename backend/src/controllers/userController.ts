@@ -1,7 +1,16 @@
 const { decodeUser } = require('../Auth/decodeUser');
 const Users = require('../models/Users');
 const messages = require('../messages.json');
-const  path = require("path")
+const path = require("path")
+const  uuid = require ("uuid")
+
+
+const getAvatarPath = (avatarName:string) => {
+ return  path.resolve(__dirname,"../static/avatars",avatarName)
+}
+const getAvatarLink = (req:any,avatarName:string) => {
+  return  `${req.protocol}://${req.hostname}:${process.env.PORT}/${avatarName}`
+}
 const loginUser = async (req:any, res:any) => {
   const { email, password } = req.body;
   try {
@@ -73,36 +82,41 @@ const getUserProfileByUsername = async (req:any, res:any) => {
     res.status(messages.default.status).json(messages.default);
   }
 };
-//
-// const updateUserPicture = async (req:any, res:any) => {
-//   try {
-//     const email = await decodeUser(req);
-//     const result = await Users.updateUserPicture(path.basename(req.file.path),email)
-//     if (!result.status) {
-//       res.json(result);
-//     } else {
-//       res.status(result.status).json(result);
-//     }
-//   } catch (e) {
-//     console.error(e);
-//     res.status(messages.default.status).json(messages.default);
-//   }
-// };
-// const getProfilePicturePath = async (req:any, res:any) => {
-//   try {
-//     const email = await decodeUser(req);
-//     const result = await Users.getProfilePicturePathByEmail(email)
-//     console.log(`profilePictures/${result}`)
-//     if (!result.status) {
-//       res.json(`${result}`);
-//     } else {
-//       res.status(result.status).json(result);
-//     }
-//   } catch (e) {
-//     console.error(e);
-//     res.status(messages.default.status).json(messages.default);
-//   }
-// };
+const updateAvatar = async (req:any, res:any) => {
+  try {
+    const {img} = req.files
+    const fileType = img.mimetype.split("/")[0];
+    const email = await decodeUser(req);
+    if (email && img && fileType === "image") {
+      const extname = path.extname(img.name);
+      const fileName = uuid.v4() + extname;
+        img.mv(getAvatarPath(fileName))
+        await Users.updateAvatar(fileName,email)
+        const avatarLink = getAvatarLink(req,fileName)
+        res.send({avatarLink:avatarLink})
+    } else {
+      throw "ERROR"
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(messages.default.status).json(messages.default);
+  }
+};
+
+const getAvatar = async (req:any, res:any) => {
+  try {
+    const email = await decodeUser(req);
+    const result = await Users.getAvatar(email)
+    if (!result.status) {
+      res.json({avatarLink:getAvatarLink(req, result)});
+    } else {
+      res.status(result.status).json(result);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(messages.default.status).json(messages.default);
+  }
+};
 
 module.exports = {
   loginUser,
@@ -110,8 +124,8 @@ module.exports = {
   getUser,
   changeUserData,
   getUserProfileByUsername,
-  // updateUserPicture,
-  // getProfilePicturePath
+  updateAvatar,
+  getAvatar
 };
 
 export {};
