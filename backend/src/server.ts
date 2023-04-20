@@ -1,11 +1,11 @@
-const exspress = require('express');
+const express = require('express');
 const cors = require('cors');
 const userRouter = require('./routes/userRoutes');
 const messages = require('./messages.json');
 const articlesRouter = require('./routes/articleRoutes');
 const generalRouter = require('./routes/generalRoutes');
 
-const app = exspress();
+const app = express();
 
 app.use(cors());
 // default route
