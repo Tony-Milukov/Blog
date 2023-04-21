@@ -149,7 +149,6 @@ class Users {
     try {
       const [data] = await pool.query(sql, [email]);
       const avatar = data[0].avatar
-      console.log(avatar)
       if(avatar) {
         return  avatar;
       } else {

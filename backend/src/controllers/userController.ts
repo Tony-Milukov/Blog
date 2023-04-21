@@ -82,14 +82,14 @@ const getUserProfileByUsername = async (req:any, res:any) => {
     res.status(messages.default.status).json(messages.default);
   }
 };
+
 const updateAvatar = async (req:any, res:any) => {
   try {
     const {img} = req.files
-    const fileType = img.mimetype.split("/")[0];
+    const [fileType,extname] = img.mimetype.split("/");
     const email = await decodeUser(req);
     if (email && img && fileType === "image") {
-      const extname = path.extname(img.name);
-      const fileName = uuid.v4() + extname;
+      const fileName = `${uuid.v4()}.${extname}`;
         img.mv(getAvatarPath(fileName))
         await Users.updateAvatar(fileName,email)
         const avatarLink = getAvatarLink(req,fileName)

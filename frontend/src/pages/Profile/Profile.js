@@ -17,7 +17,7 @@ const Profile = () => {
         const user = await getUser(token)
         setUser(user)
         setAvatarLink(`http://localhost:5000/${user.avatar}`)
-    }
+uiz    }
     useEffect(() => {
         refresh()
     }, [])
