@@ -27,7 +27,7 @@ This is a blogging website built using Node.js, Express, React and MongoDB.
 - dotenv
 - express
 - jsonwebtoken
-- mongoose
+- mysql
 - nodemon
 - react
 - react-dom
